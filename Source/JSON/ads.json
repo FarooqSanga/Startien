@@ -1,0 +1,93 @@
+[
+    {
+      "id": 1,
+      "picture": "https://via.placeholder.com/100",
+      "price": "Rs. 100",
+      "title": "Ad Title 1",
+      "features": ["Feature 1", "Feature 2", "Feature 3"],
+      "location": "Karachi",
+      "postedDate": "2024-06-24 12:00"
+    },
+    {
+      "id": 2,
+      "picture": "https://via.placeholder.com/100",
+      "price": "Rs. 200",
+      "title": "Ad Title 2",
+      "features": ["Feature 1", "Feature 2", "Feature 3"],
+      "location": "Lahore",
+      "postedDate": "2024-06-24 13:00"
+    },
+    {
+      "id": 3,
+      "picture": "https://via.placeholder.com/100",
+      "price": "Rs. 300",
+      "title": "Ad Title 3",
+      "features": ["Feature 1", "Feature 2", "Feature 3"],
+      "location": "Islamabad",
+      "postedDate": "2024-06-24 14:00"
+    },
+    {
+      "id": 4,
+      "picture": "https://via.placeholder.com/100",
+      "price": "Rs. 400",
+      "title": "Ad Title 4",
+      "features": ["Feature 1", "Feature 2", "Feature 3"],
+      "location": "Rawalpindi",
+      "postedDate": "2024-06-24 15:00"
+    },
+    {
+      "id": 5,
+      "picture": "https://via.placeholder.com/100",
+      "price": "Rs. 500",
+      "title": "Ad Title 5",
+      "features": ["Feature 1", "Feature 2", "Feature 3"],
+      "location": "Peshawar",
+      "postedDate": "2024-06-24 16:00"
+    },
+    {
+      "id": 6,
+      "picture": "https://via.placeholder.com/100",
+      "price": "Rs. 600",
+      "title": "Ad Title 6",
+      "features": ["Feature 1", "Feature 2", "Feature 3"],
+      "location": "Quetta",
+      "postedDate": "2024-06-24 17:00"
+    },
+    {
+      "id": 7,
+      "picture": "https://via.placeholder.com/100",
+      "price": "Rs. 700",
+      "title": "Ad Title 7",
+      "features": ["Feature 1", "Feature 2", "Feature 3"],
+      "location": "Multan",
+      "postedDate": "2024-06-24 18:00"
+    },
+    {
+      "id": 8,
+      "picture": "https://via.placeholder.com/100",
+      "price": "Rs. 800",
+      "title": "Ad Title 8",
+      "features": ["Feature 1", "Feature 2", "Feature 3"],
+      "location": "Faisalabad",
+      "postedDate": "2024-06-24 19:00"
+    },
+    {
+      "id": 9,
+      "picture": "https://via.placeholder.com/100",
+      "price": "Rs. 900",
+      "title": "Ad Title 9",
+      "features": ["Feature 1", "Feature 2", "Feature 3"],
+      "location": "Sialkot",
+      "postedDate": "2024-06-24 20:00"
+    },
+    {
+      "id": 10,
+      "picture": "https://via.placeholder.com/100",
+      "price": "Rs. 1000",
+      "title": "Ad Title 10",
+      "features": ["Feature 1", "Feature 2", "Feature 3"],
+      "location": "Gujranwala",
+      "postedDate": "2024-06-24 21:00"
+    }
+  ]
+  

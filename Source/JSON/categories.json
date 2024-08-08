@@ -1,0 +1,15 @@
+[
+  { "name": "Vehicles", "icon": "🚗" },
+  { "name": "Property", "icon": "🏠" },
+  { "name": "Mobiles", "icon": "📱" },
+  { "name": "Electronics", "icon": "💻" },
+  { "name": "Home Appliances", "icon": "🏠" },
+  { "name": "Services", "icon": "🔧" },
+  { "name": "Jobs", "icon": "💼" },
+  { "name": "Animals", "icon": "🐾" },
+  { "name": "Furniture", "icon": "🛏️" },
+  { "name": "Fashion & Beauty", "icon": "👗" },
+  { "name": "Books", "icon": "📚" },
+  { "name": "Sports", "icon": "⚽" },
+  { "name": "Others", "icon ": "➕" }
+]

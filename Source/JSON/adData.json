@@ -1,0 +1,927 @@
+
+{
+  "ads": [
+    {
+      "listingId": "l1",
+      "categoryId": "1",
+      "categoryName": "Vehicles",
+      "subcategoryId": "1.1",
+      "subcategoryName": "Cars",
+      "title": "Used Car for Sale",
+      "description": "Well-maintained used car with low mileage and full service history.",
+      "price": 5000,
+      "currency": "USD",
+      "images": [
+        "url_to_image1",
+        "url_to_image2",
+        "url_to_image3"
+      ],
+      "location": {
+        "street": "123 Main St",
+        "city": "Anytown",
+        "state": "Anystate",
+        "zip": "12345",
+        "country": "USA"
+      },
+      "datePosted": "2023-01-01T10:00:00Z",
+      "condition": "Used",
+      "contactInfo": {
+        "name": "John Doe",
+        "phone": "1234567890",
+        "email": "john.doe@example.com"
+      },
+      "sellerInfo": {
+        "userId": "u1",
+        "name": "John Doe",
+        "email": "john.doe@example.com",
+        "phone": "1234567890",
+        "profilePicture": "url_to_profile_picture",
+        "ratings": {
+          "averageRating": 4.5,
+          "reviews": [
+            {
+              "reviewId": "r1",
+              "userId": "u2",
+              "rating": 5,
+              "comment": "Great seller!"
+            }
+          ]
+        }
+      },
+      "views": 120,
+      "interestedUsers": [
+        {
+          "userId": "u3",
+          "message": "Is the car still available?",
+          "timestamp": "2023-01-02T10:00:00Z"
+        }
+      ],
+      "transaction": {
+        "transactionId": "t1",
+        "buyerId": "u2",
+        "sellerId": "u1",
+        "price": 5000,
+        "status": "completed",
+        "date": "2023-01-15T12:00:00Z",
+        "paymentMethod": "Cash",
+        "rating": {
+          "buyerRating": 5,
+          "sellerRating": 4.5,
+          "comments": [
+            {
+              "userId": "u2",
+              "comment": "Smooth transaction, thanks!"
+            }
+          ]
+        }
+      },
+      "messages": [
+        {
+          "messageId": "m1",
+          "fromUserId": "u2",
+          "toUserId": "u1",
+          "content": "Is the car still available?",
+          "timestamp": "2023-01-02T10:00:00Z",
+          "read": false
+        },
+        {
+          "messageId": "m2",
+          "fromUserId": "u1",
+          "toUserId": "u2",
+          "content": "Yes, it's still available.",
+          "timestamp": "2023-01-02T10:05:00Z",
+          "read": true
+        }
+      ]
+    },
+    {
+      "listingId": "l2",
+      "categoryId": "1",
+      "categoryName": "Vehicles",
+      "subcategoryId": "1.2",
+      "subcategoryName": "Motorcycles",
+      "title": "2018 Yamaha MT-07",
+      "description": "Lightly used Yamaha MT-07, perfect for city rides.",
+      "price": 4500,
+      "currency": "USD",
+      "images": [
+        "url_to_image4",
+        "url_to_image5"
+      ],
+      "location": {
+        "street": "456 Elm St",
+        "city": "Othertown",
+        "state": "Otherstate",
+        "zip": "67890",
+        "country": "USA"
+      },
+      "datePosted": "2023-02-01T10:00:00Z",
+      "condition": "Used",
+      "contactInfo": {
+        "name": "Jane Smith",
+        "phone": "0987654321",
+        "email": "jane.smith@example.com"
+      },
+      "sellerInfo": {
+        "userId": "u2",
+        "name": "Jane Smith",
+        "email": "jane.smith@example.com",
+        "phone": "0987654321",
+        "profilePicture": "url_to_profile_picture2",
+        "ratings": {
+          "averageRating": 4.8,
+          "reviews": [
+            {
+              "reviewId": "r2",
+              "userId": "u1",
+              "rating": 5,
+              "comment": "Excellent experience!"
+            }
+          ]
+        }
+      },
+      "views": 90,
+      "interestedUsers": [
+        {
+          "userId": "u4",
+          "message": "Is the motorcycle still available?",
+          "timestamp": "2023-02-02T11:00:00Z"
+        }
+      ],
+      "transaction": {
+        "transactionId": "t2",
+        "buyerId": "u3",
+        "sellerId": "u2",
+        "price": 4500,
+        "status": "completed",
+        "date": "2023-02-15T13:00:00Z",
+        "paymentMethod": "Bank Transfer",
+        "rating": {
+          "buyerRating": 5,
+          "sellerRating": 5,
+          "comments": [
+            {
+              "userId": "u3",
+              "comment": "Amazing bike, thanks!"
+            }
+          ]
+        }
+      },
+      "messages": [
+        {
+          "messageId": "m3",
+          "fromUserId": "u4",
+          "toUserId": "u2",
+          "content": "Is the motorcycle still available?",
+          "timestamp": "2023-02-02T11:00:00Z",
+          "read": false
+        },
+        {
+          "messageId": "m4",
+          "fromUserId": "u2",
+          "toUserId": "u4",
+          "content": "Yes, it is.",
+          "timestamp": "2023-02-02T11:05:00Z",
+          "read": true
+        }
+      ]
+    },
+    {
+      "listingId": "l3",
+      "categoryId": "2",
+      "categoryName": "Real Estate",
+      "subcategoryId": "2.1",
+      "subcategoryName": "Apartments",
+      "title": "2-Bedroom Apartment for Rent",
+      "description": "Spacious 2-bedroom apartment in a prime location.",
+      "price": 1200,
+      "currency": "USD",
+      "images": [
+        "url_to_image6",
+        "url_to_image7"
+      ],
+      "location": {
+        "street": "789 Pine St",
+        "city": "Bigcity",
+        "state": "Bigstate",
+        "zip": "24680",
+        "country": "USA"
+      },
+      "datePosted": "2023-03-01T10:00:00Z",
+      "condition": "New",
+      "contactInfo": {
+        "name": "Alice Johnson",
+        "phone": "5678901234",
+        "email": "alice.johnson@example.com"
+      },
+      "sellerInfo": {
+        "userId": "u3",
+        "name": "Alice Johnson",
+        "email": "alice.johnson@example.com",
+        "phone": "5678901234",
+        "profilePicture": "url_to_profile_picture3",
+        "ratings": {
+          "averageRating": 4.7,
+          "reviews": [
+            {
+              "reviewId": "r3",
+              "userId": "u1",
+              "rating": 5,
+              "comment": "Great landlord!"
+            }
+          ]
+        }
+      },
+      "views": 150,
+      "interestedUsers": [
+        {
+          "userId": "u5",
+          "message": "Is the apartment still available?",
+          "timestamp": "2023-03-02T12:00:00Z"
+        }
+      ],
+      "transaction": {
+        "transactionId": "t3",
+        "buyerId": "u4",
+        "sellerId": "u3",
+        "price": 1200,
+        "status": "completed",
+        "date": "2023-03-15T14:00:00Z",
+        "paymentMethod": "Credit Card",
+        "rating": {
+          "buyerRating": 4,
+          "sellerRating": 4.7,
+          "comments": [
+            {
+              "userId": "u4",
+              "comment": "Good apartment, reasonable price."
+            }
+          ]
+        }
+      },
+      "messages": [
+        {
+          "messageId": "m5",
+          "fromUserId": "u5",
+          "toUserId": "u3",
+          "content": "Is the apartment still available?",
+          "timestamp": "2023-03-02T12:00:00Z",
+          "read": false
+        },
+        {
+          "messageId": "m6",
+          "fromUserId": "u3",
+          "toUserId": "u5",
+          "content": "Yes, it is.",
+          "timestamp": "2023-03-02T 12:05:00Z",
+          "read": true
+        }
+      ]
+    },
+    {
+      "listingId": "l4",
+      "categoryId": "2",
+      "categoryName": "Real Estate",
+      "subcategoryId": "2.2",
+      "subcategoryName": "Houses",
+      "title": "3-Bedroom House for Sale",
+      "description": "Beautiful 3-bedroom house with a large backyard.",
+      "price": 250000,
+      "currency": "USD",
+      "images": [
+        "url_to_image8",
+        "url_to_image9"
+      ],
+      "location": {
+        "street": "101 Maple St",
+        "city": "Smalltown",
+        "state": "Smallstate",
+        "zip": "11223",
+        "country": "USA"
+      },
+      "datePosted": "2023-04-01T10:00:00Z",
+      "condition": "New",
+      "contactInfo": {
+        "name": "Bob Brown",
+        "phone": "6789012345",
+        "email": "bob.brown@example.com"
+      },
+      "sellerInfo": {
+        "userId": "u4",
+        "name": "Bob Brown",
+        "email": "bob.brown@example.com",
+        "phone": "6789012345",
+        "profilePicture": "url_to_profile_picture4",
+        "ratings": {
+          "averageRating": 4.9,
+          "reviews": [
+            {
+              "reviewId": "r4",
+              "userId": "u1",
+              "rating": 5,
+              "comment": "Fantastic seller!"
+            }
+          ]
+        }
+      },
+      "views": 200,
+      "interestedUsers": [
+        {
+          "userId": "u6",
+          "message": "Is the house still available?",
+          "timestamp": "2023-04-02T13:00:00Z"
+        }
+      ],
+      "transaction": {
+        "transactionId": "t4",
+        "buyerId": "u5",
+        "sellerId": "u4",
+        "price": 250000,
+        "status": "completed",
+        "date": "2023-04-15T15:00:00Z",
+        "paymentMethod": "Mortgage",
+        "rating": {
+          "buyerRating": 5,
+          "sellerRating": 4.9,
+          "comments": [
+            {
+              "userId": "u5",
+              "comment": "Wonderful house, thanks!"
+            }
+          ]
+        }
+      },
+      "messages": [
+        {
+          "messageId": "m7",
+          "fromUserId": "u6",
+          "toUserId": "u4",
+          "content": "Is the house still available?",
+          "timestamp": "2023-04-02T13:00:00Z",
+          "read": false
+        },
+        {
+          "messageId": "m8",
+          "fromUserId": "u4",
+          "toUserId": "u6",
+          "content": "Yes, it is.",
+          "timestamp": "2023-04-02T13:05:00Z",
+          "read": true
+        }
+      ]
+    },
+    {
+      "listingId": "l5",
+      "categoryId": "3",
+      "categoryName": "Electronics",
+      "subcategoryId": "3.1",
+      "subcategoryName": "Mobile Phones",
+      "title": "iPhone 12 Pro Max",
+      "description": "Brand new iPhone 12 Pro Max, sealed box.",
+      "price": 999,
+      "currency": "USD",
+      "images": [
+        "url_to_image10"
+      ],
+      "location": {
+        "street": "102 Maple St",
+        "city": "Bigcity",
+        "state": "Bigstate",
+        "zip": "56789",
+        "country": "USA"
+      },
+      "datePosted": "2023-05-01T10:00:00Z",
+      "condition": "New",
+      "contactInfo": {
+        "name": "Charlie Davis",
+        "phone": "7890123456",
+        "email": "charlie.davis@example.com"
+      },
+      "sellerInfo": {
+        "userId": "u5",
+        "name": "Charlie Davis",
+        "email": "charlie.davis@example.com",
+        "phone": "7890123456",
+        "profilePicture": "url_to_profile_picture5",
+        "ratings": {
+          "averageRating": 4.6,
+          "reviews": [
+            {
+              "reviewId": "r5",
+              "userId": "u2",
+              "rating": 5,
+              "comment": "Quick response!"
+            }
+          ]
+        }
+      },
+      "views": 110,
+      "interestedUsers": [
+        {
+          "userId": "u7",
+          "message": "Is the phone still available?",
+          "timestamp": "2023-05-02T14:00:00Z"
+        }
+      ],
+      "transaction": {
+        "transactionId": "t5",
+        "buyerId": "u6",
+        "sellerId": "u5",
+        "price": 999,
+        "status": "completed",
+        "date": "2023-05-15T16:00:00Z",
+        "paymentMethod": "PayPal",
+        "rating": {
+          "buyerRating": 5,
+          "sellerRating": 4.6,
+          "comments": [
+            {
+              "userId": "u6",
+              "comment": "Perfect transaction!"
+            }
+          ]
+        }
+      },
+      "messages": [
+        {
+          "messageId": "m9",
+          "fromUserId": "u7",
+          "toUserId": "u5",
+          "content": "Is the phone still available?",
+          "timestamp": "2023-05-02T14:00:00Z",
+          "read": false
+        },
+        {
+          "messageId": "m10",
+          "fromUserId": "u5",
+          "toUserId": "u7",
+          "content": "Yes, it is.",
+          "timestamp": "2023-05-02T14:05:00Z",
+          "read": true
+        }
+      ]
+    },
+    {
+      "listingId": "l6",
+      "categoryId": "3",
+      "categoryName": "Electronics",
+      "subcategoryId": "3.2",
+      "subcategoryName": "Laptops",
+      "title": "Dell XPS 13",
+      "description": "Lightly used Dell XPS 13 laptop, in excellent condition.",
+      "price": 800,
+      "currency": "USD",
+      "images": [
+        "url_to_image11",
+        "url_to_image12"
+      ],
+      "location": {
+        "street": "103 Maple St",
+        "city": "Bigcity",
+        "state": "Bigstate",
+        "zip": "56789",
+        "country": "USA"
+      },
+      "datePosted": "2023-06-01T10:00:00Z",
+      "condition": "Used",
+      "contactInfo": {
+        "name": "David Evans",
+        "phone": "8901234567",
+        "email": "david.evans@example.com"
+      },
+      "sellerInfo": {
+        "userId": "u6",
+        "name": "David Evans",
+        "email": "david.evans@example.com",
+        "phone": "8901234567",
+        "profilePicture": "url_to_profile_picture6",
+        "ratings": {
+          "averageRating": 4.5,
+          "reviews": [
+            {
+              "reviewId": "r6",
+              "userId": "u3",
+              "rating": 4,
+              "comment": "Good seller, but a bit slow to respond."
+            }
+          ]
+        }
+      },
+      "views": 95,
+      "interestedUsers": [
+        {
+          "userId": "u8",
+          "message": "Is the laptop still available?",
+          "timestamp": "2023-06-02T15:00:00Z"
+        }
+      ],
+      "transaction": {
+        "transactionId": "t6",
+        "buyerId": "u7",
+        "sellerId": "u6",
+        "price": 800,
+        "status": "completed",
+        "date": "2023-06-15T17:00:00Z",
+        "paymentMethod": "Credit Card",
+        "rating": {
+          "buyerRating": 4.5,
+          "sellerRating": 4.5,
+          "comments": [
+            {
+              "userId": "u7",
+              "comment": "Great laptop, thanks!"
+            }
+          ]
+        }
+      },
+      "messages": [
+        {
+          "messageId": "m11",
+          "fromUserId": "u8",
+          "toUserId": "u6",
+          "content": "Is the laptop still available?",
+          "timestamp": "2023-06-02T15:00:00Z",
+          "read": false
+        },
+        {
+          "messageId": "m12",
+          "fromUserId": "u6",
+          "toUserId": "u8",
+          "content": "Yes, it is.",
+          "timestamp": "2023-06-02T15:05:00Z",
+          "read": true
+
+
+        }
+      ]
+    },
+    {
+      "listingId": "l7",
+      "categoryId": "4",
+      "categoryName": "Furniture",
+      "subcategoryId": "4.1",
+      "subcategoryName": "Sofas",
+      "title": "Leather Sofa",
+      "description": "Comfortable leather sofa, perfect for living room.",
+      "price": 300,
+      "currency": "USD",
+      "images": [
+        "url_to_image13",
+        "url_to_image14"
+      ],
+      "location": {
+        "street": "104 Maple St",
+        "city": "Bigcity",
+        "state": "Bigstate",
+        "zip": "56789",
+        "country": "USA"
+      },
+      "datePosted": "2023-07-01T10:00:00Z",
+      "condition": "Used",
+      "contactInfo": {
+        "name": "Eva Green",
+        "phone": "9012345678",
+        "email": "eva.green@example.com"
+      },
+      "sellerInfo": {
+        "userId": "u7",
+        "name": "Eva Green",
+        "email": "eva.green@example.com",
+        "phone": "9012345678",
+        "profilePicture": "url_to_profile_picture7",
+        "ratings": {
+          "averageRating": 4.7,
+          "reviews": [
+            {
+              "reviewId": "r7",
+              "userId": "u4",
+              "rating": 5,
+              "comment": "Great quality sofa!"
+            }
+          ]
+        }
+      },
+      "views": 80,
+      "interestedUsers": [
+        {
+          "userId": "u9",
+          "message": "Is the sofa still available?",
+          "timestamp": "2023-07-02T16:00:00Z"
+        }
+      ],
+      "transaction": {
+        "transactionId": "t7",
+        "buyerId": "u8",
+        "sellerId": "u7",
+        "price": 300,
+        "status": "completed",
+        "date": "2023-07-15T18:00:00Z",
+        "paymentMethod": "Cash",
+        "rating": {
+          "buyerRating": 5,
+          "sellerRating": 4.7,
+          "comments": [
+            {
+              "userId": "u8",
+              "comment": "Very happy with the sofa!"
+            }
+          ]
+        }
+      },
+      "messages": [
+        {
+          "messageId": "m13",
+          "fromUserId": "u9",
+          "toUserId": "u7",
+          "content": "Is the sofa still available?",
+          "timestamp": "2023-07-02T16:00:00Z",
+          "read": false
+        },
+        {
+          "messageId": "m14",
+          "fromUserId": "u7",
+          "toUserId": "u9",
+          "content": "Yes, it is.",
+          "timestamp": "2023-07-02T16:05:00Z",
+          "read": true
+        }
+      ]
+    },
+    {
+      "listingId": "l8",
+      "categoryId": "4",
+      "categoryName": "Furniture",
+      "subcategoryId": "4.2",
+      "subcategoryName": "Beds",
+      "title": "King Size Bed",
+      "description": "King size bed with mattress, barely used.",
+      "price": 500,
+      "currency": "USD",
+      "images": [
+        "url_to_image15",
+        "url_to_image16"
+      ],
+      "location": {
+        "street": "105 Maple St",
+        "city": "Bigcity",
+        "state": "Bigstate",
+        "zip": "56789",
+        "country": "USA"
+      },
+      "datePosted": "2023-08-01T10:00:00Z",
+      "condition": "Used",
+      "contactInfo": {
+        "name": "Frank Harris",
+        "phone": "0123456789",
+        "email": "frank.harris@example.com"
+      },
+      "sellerInfo": {
+        "userId": "u8",
+        "name": "Frank Harris",
+        "email": "frank.harris@example.com",
+        "phone": "0123456789",
+        "profilePicture": "url_to_profile_picture8",
+        "ratings": {
+          "averageRating": 4.4,
+          "reviews": [
+            {
+              "reviewId": "r8",
+              "userId": "u5",
+              "rating": 4,
+              "comment": "Good condition bed!"
+            }
+          ]
+        }
+      },
+      "views": 70,
+      "interestedUsers": [
+        {
+          "userId": "u10",
+          "message": "Is the bed still available?",
+          "timestamp": "2023-08-02T17:00:00Z"
+        }
+      ],
+      "transaction": {
+        "transactionId": "t8",
+        "buyerId": "u9",
+        "sellerId": "u8",
+        "price": 500,
+        "status": "completed",
+        "date": "2023-08-15T19:00:00Z",
+        "paymentMethod": "Bank Transfer",
+        "rating": {
+          "buyerRating": 4.5,
+          "sellerRating": 4.4,
+          "comments": [
+            {
+              "userId": "u9",
+              "comment": "Nice bed, good deal."
+            }
+          ]
+        }
+      },
+      "messages": [
+        {
+          "messageId": "m15",
+          "fromUserId": "u10",
+          "toUserId": "u8",
+          "content": "Is the bed still available?",
+          "timestamp": "2023-08-02T17:00:00Z",
+          "read": false
+        },
+        {
+          "messageId": "m16",
+          "fromUserId": "u8",
+          "toUserId": "u10",
+          "content": "Yes, it is.",
+          "timestamp": "2023-08-02T17:05:00Z",
+          "read": true
+        }
+      ]
+    },
+    {
+      "listingId": "l9",
+      "categoryId": "5",
+      "categoryName": "Services",
+      "subcategoryId": "5.1",
+      "subcategoryName": "Tutoring",
+      "title": "Math Tutoring Services",
+      "description": "Experienced math tutor available for high school and college students.",
+      "price": 30,
+      "currency": "USD",
+      "images": [
+        "url_to_image17"
+      ],
+      "location": {
+        "street": "106 Maple St",
+        "city": "Bigcity",
+        "state": "Bigstate",
+        "zip": "56789",
+        "country": "USA"
+      },
+      "datePosted": "2023-09-01T10:00:00Z",
+      "condition": "Service",
+      "contactInfo": {
+        "name": "Grace Kim",
+        "phone": "1234567890",
+        "email": "grace.kim@example.com"
+      },
+      "sellerInfo": {
+        "userId": "u9",
+        "name": "Grace Kim",
+        "email": "grace.kim@example.com",
+        "phone": "1234567890",
+        "profilePicture": "url_to_profile_picture9",
+        "ratings": {
+          "averageRating": 4.8,
+          "reviews": [
+            {
+              "reviewId": "r9",
+              "userId": "u6",
+              "rating": 5,
+              "comment": "Excellent tutor!"
+            }
+          ]
+        }
+      },
+      "views": 60,
+      "interestedUsers": [
+        {
+          "userId": "u11",
+          "message": "Are you still available for tutoring?",
+          "timestamp": "2023-09-02T18:00:00Z"
+        }
+      ],
+      "transaction": {
+        "transactionId": "t9",
+        "buyerId": "u10",
+        "sellerId": "u9",
+        "price": 30,
+        "status": "completed",
+        "date": "2023-09-15T20:00:00Z",
+        "paymentMethod": "Cash",
+        "rating": {
+          "buyerRating": 5,
+          "sellerRating": 4.8,
+          "comments": [
+            {
+              "userId": "u10",
+              "comment": "Very helpful tutor!"
+            }
+          ]
+        }
+      },
+      "messages": [
+        {
+          "messageId": "m17",
+          "fromUserId": "u11",
+          "toUserId": "u9",
+          "content": "Are you still available for tutoring?",
+          "timestamp": "2023-09-02T18:00:00Z",
+          "read": false
+        },
+        {
+          "messageId": "m18",
+          "fromUserId": "u9",
+          "toUserId": "u11",
+          "content": "Yes, I am.",
+          "timestamp": "2023-09-02T18:05:00Z",
+          "read": true
+        }
+      ]
+    },
+    {
+      "listingId": "l10",
+      "categoryId": "5",
+      "categoryName": "Services",
+     
+
+ "subcategoryId": "5.2",
+      "subcategoryName": "Cleaning",
+      "title": "House Cleaning Services",
+      "description": "Professional house cleaning services available weekly or bi-weekly.",
+      "price": 50,
+      "currency": "USD",
+      "images": [
+        "url_to_image18"
+      ],
+      "location": {
+        "street": "107 Maple St",
+        "city": "Bigcity",
+        "state": "Bigstate",
+        "zip": "56789",
+        "country": "USA"
+      },
+      "datePosted": "2023-10-01T10:00:00Z",
+      "condition": "Service",
+      "contactInfo": {
+        "name": "Henry Lee",
+        "phone": "2345678901",
+        "email": "henry.lee@example.com"
+      },
+      "sellerInfo": {
+        "userId": "u10",
+        "name": "Henry Lee",
+        "email": "henry.lee@example.com",
+        "phone": "2345678901",
+        "profilePicture": "url_to_profile_picture10",
+        "ratings": {
+          "averageRating": 4.9,
+          "reviews": [
+            {
+              "reviewId": "r10",
+              "userId": "u7",
+              "rating": 5,
+              "comment": "Fantastic cleaning service!"
+            }
+          ]
+        }
+      },
+      "views": 50,
+      "interestedUsers": [
+        {
+          "userId": "u12",
+          "message": "Are you available this weekend for cleaning?",
+          "timestamp": "2023-10-02T19:00:00Z"
+        }
+      ],
+      "transaction": {
+        "transactionId": "t10",
+        "buyerId": "u11",
+        "sellerId": "u10",
+        "price": 50,
+        "status": "completed",
+        "date": "2023-10-15T21:00:00Z",
+        "paymentMethod": "Cash",
+        "rating": {
+          "buyerRating": 5,
+          "sellerRating": 4.9,
+          "comments": [
+            {
+              "userId": "u11",
+              "comment": "Very satisfied with the cleaning!"
+            }
+          ]
+        }
+      },
+      "messages": [
+        {
+          "messageId": "m19",
+          "fromUserId": "u12",
+          "toUserId": "u10",
+          "content": "Are you available this weekend for cleaning?",
+          "timestamp": "2023-10-02T19:00:00Z",
+          "read": false
+        },
+        {
+          "messageId": "m20",
+          "fromUserId": "u10",
+          "toUserId": "u12",
+          "content": "Yes, I am.",
+          "timestamp": "2023-10-02T19:05:00Z",
+          "read": true
+        }
+      ]
+    }
+  ]
+}
