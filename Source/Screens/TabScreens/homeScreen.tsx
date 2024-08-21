@@ -8,6 +8,7 @@ import Slider from '../../Components/sliderComponent';
 import CategoryList from '../../Components/categoryListComponent';
 import AdCard from '../../Components/adCardComponent';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import CustomStatusBar from '../../Components/customStatusBar';
 
 type Props = {
   navigation: any;
@@ -19,6 +20,8 @@ const HomeScreen: FunctionComponent<Props> = ({navigation}) => {
 
   return (
     <View style={styles.container}>
+      <CustomStatusBar backgroundColor="#f4511e" barStyle="light-content" />
+
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         {/* <Header /> */}
         <LocationInput
