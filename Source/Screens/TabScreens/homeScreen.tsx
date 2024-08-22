@@ -1,5 +1,5 @@
 import React, {FunctionComponent, useState} from 'react';
-import {View, ScrollView, StyleSheet, Pressable, Text} from 'react-native';
+import {View, ScrollView, StyleSheet, Pressable, Text, StatusBar} from 'react-native';
 import adsData from './../../JSON/ads.json';
 import Header from '../../Components/headerComponent';
 import LocationInput from '../../Components/locationComponent';

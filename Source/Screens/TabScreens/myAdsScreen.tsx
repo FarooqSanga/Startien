@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, FlatList, Image, StyleSheet, TouchableOpacity, StatusBar } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faPencilAlt, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import adsData from './../../JSON/adData.json';
+import CustomStatusBar from '../../Components/customStatusBar';
 
 type Props = {
   navigation: any;
@@ -33,6 +34,8 @@ const MyAdsScreen: React.FC<Props> = ({ navigation }) => {
 
   const renderItem = ({ item }: { item: any }) => (
     <TouchableOpacity onPress={() => handleEditAd(item.listingId)}>
+            <StatusBar backgroundColor="#f4511e" barStyle="light-content" />
+
       <View style={styles.adContainer}>
         {item.images && item.images[0] && (
           <Image source={{ uri: item.images[0] }} style={styles.image} />
