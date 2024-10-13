@@ -1,159 +1,193 @@
-// import React, { FunctionComponent, useState } from 'react';
-// import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, Alert } from 'react-native';
-// // import { GoogleSignin, GoogleSigninButton } from '@react-native-google-signin/google-signin';
-// // import { AccessToken, LoginManager } from 'react-native-fbsdk-next';
+import React, { FunctionComponent, useState } from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TextInput,
+  TouchableOpacity,
+  Alert,
+  StatusBar,
+} from 'react-native';
+import auth from '@react-native-firebase/auth';
+import database from '@react-native-firebase/database';
+import { useNavigation } from '@react-navigation/native';
 
-// // GoogleSignin.configure({
-// //   webClientId: 'YOUR_GOOGLE_WEB_CLIENT_ID',
-// // });
+type Props = {
+  navigation: any;
+};
 
-// type Props = {
-//     navigation: any;
-//   };
-// const LoginScreen: FunctionComponent<Props> = ({ navigation }) => {
-//   const [emailOrMobile, setEmailOrMobile] = useState('');
-//   const [password, setPassword] = useState('');
+const LoginScreen: FunctionComponent<Props> = ({ navigation }) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-//   const handleEmailLogin = () => {
-//     // Handle email or mobile login
-//     Alert.alert('Login', `Logged in with email/mobile: ${emailOrMobile}`);
-//   };
+  const handleLogin = () => {
+    if (!email.trim()) {
+      Alert.alert('Email Error', 'Email cannot be empty');
+      return;
+    }
+    if (!password.trim()) {
+      Alert.alert('Password Error', 'Password cannot be empty');
+      return;
+    }
 
-// //   const handleGoogleLogin = async () => {
-// //     try {
-// //       await GoogleSignin.hasPlayServices();
-// //       const userInfo = await GoogleSignin.signIn();
-// //       Alert.alert('Login', `Logged in with Google: ${userInfo.user.email}`);
-// //     } catch (error) {
-// //       console.error(error);
-// //     }
-// //   };
+    auth()
+      .signInWithEmailAndPassword(email, password)
+      .then(() => {
 
-// //   const handleFacebookLogin = async () => {
-// //     try {
-// //       const result = await LoginManager.logInWithPermissions(['public_profile', 'email']);
-// //       if (result.isCancelled) {
-// //         Alert.alert('Login cancelled');
-// //       } else {
-// //         const data = await AccessToken.getCurrentAccessToken();
-// //         if (!data) {
-// //           Alert.alert('Something went wrong obtaining the access token');
-// //         } else {
-// //           Alert.alert('Login', `Logged in with Facebook: ${data.accessToken.toString()}`);
-// //         }
-// //       }
-// //     } catch (error) {
-// //       console.error(error);
-// //     }
-// //   };
+        navigation.replace('TabNavigation');
 
-//   return (
-//     <View style={styles.container}>
-//       {/* <Image source={require('./path/to/logo.png')} style={styles.logo} /> */}
-//       <Text style={styles.title}>Welcome Back</Text>
-//       <TextInput
-//         style={styles.input}
-//         placeholder="Email or Mobile"
-//         value={emailOrMobile}
-//         onChangeText={setEmailOrMobile}
-//         keyboardType="email-address"
-//         autoCapitalize="none"
-//       />
-//       <TextInput
-//         style={styles.input}
-//         placeholder="Password"
-//         value={password}
-//         onChangeText={setPassword}
-//         secureTextEntry
-//         autoCapitalize="none"
-//       />
-//       <TouchableOpacity style={styles.loginButton} onPress={handleEmailLogin}>
-//         <Text style={styles.loginButtonText}>Login</Text>
-//       </TouchableOpacity>
-//       <Text style={styles.orText}>or login with</Text>
-//       <View style={styles.socialButtonsContainer}>
-//         {/* <GoogleSigninButton
-//           style={styles.googleButton}
-//           size={GoogleSigninButton.Size.Wide}
-//           color={GoogleSigninButton.Color.Dark}
-//         //   onPress={            handleGoogleLogin        }
-//         /> */}
-//         <TouchableOpacity style={styles.facebookButton} 
-//         // onPress={handleFacebookLogin}
-//         >
-//           <Text style={styles.facebookButtonText}>Login with Facebook</Text>
-//         </TouchableOpacity>
-//       </View>
-//     </View>
-//   );
-// };
+        // console.log('User account signed in!');
+        // const currentUser = auth().currentUser;
 
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     padding: 20,
-//     justifyContent: 'center',
-//     backgroundColor: '#fff',
-//   },
-//   logo: {
-//     width: 150,
-//     height: 150,
-//     alignSelf: 'center',
-//     marginBottom: 20,
-//   },
-//   title: {
-//     fontSize: 24,
-//     fontWeight: 'bold',
-//     textAlign: 'center',
-//     marginBottom: 20,
-//   },
-//   input: {
-//     height: 50,
-//     borderColor: '#ddd',
-//     borderWidth: 1,
-//     borderRadius: 10,
-//     paddingHorizontal: 10,
-//     marginBottom: 20,
-//     backgroundColor: '#f9f9f9',
-//   },
-//   loginButton: {
-//     height: 50,
-//     backgroundColor: '#4CAF50',
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//     borderRadius: 10,
-//   },
-//   loginButtonText: {
-//     color: '#fff',
-//     fontSize: 18,
-//     fontWeight: 'bold',
-//   },
-//   orText: {
-//     textAlign: 'center',
-//     marginVertical: 10,
-//     color: '#888',
-//   },
-//   socialButtonsContainer: {
-//     flexDirection: 'row',
-//     justifyContent: 'space-around',
-//   },
-//   googleButton: {
-//     width: '48%',
-//     height: 50,
-//   },
-//   facebookButton: {
-//     width: '48%',
-//     height: 50,
-//     backgroundColor: '#3b5998',
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//     borderRadius: 10,
-//   },
-//   facebookButtonText: {
-//     color: '#fff',
-//     fontSize: 16,
-//     fontWeight: 'bold',
-//   },
-// });
+        // if (currentUser) {
+        //   const userID = currentUser.uid;
+        //   const userRef = database().ref(`/users/${userID}`);
 
-// export default LoginScreen;
+        //   userRef.once('value', (snapshot) => {
+        //     const userData = snapshot.val();
+        //     if (userData) {
+        //       // Check user data and navigate accordingly
+        //       if (!userData.profileCompleted || !userData.selectedPartner) {
+        //         navigation.replace('TabNavigation');
+        //       } else {
+        //         navigation.replace('TabNavigation');
+        //       }
+        //     } else {
+        //       // Handle case where userData is null or undefined
+        //       navigation.replace('TabNavigation');
+        //     }
+        //   });
+        // } else {
+        //   navigation.replace('LoginScreen');
+        // }
+      })
+      .catch(error => {
+        console.log('Error:', error);
+        let errorMessage = 'Login failed. Please try again.';
+
+        if (error.code === 'auth/email-already-in-use') {
+          errorMessage = 'That email address is already in use!';
+        } else if (error.code === 'auth/invalid-email') {
+          errorMessage = 'Invalid email address!';
+        } else if (error.code === 'auth/wrong-password') {
+          errorMessage = 'Invalid password. Please try again.';
+        }
+
+        Alert.alert('Login Error', errorMessage);
+        console.log('Error Message:', errorMessage);
+      });
+  };
+
+  return (
+    <View style={styles.container}>
+      <StatusBar backgroundColor={'#6200ea'} />
+      <View style={styles.content}>
+        <Image
+          source={require('../../Assets/Logo/startienlogo.png')}
+          style={styles.logo}
+          resizeMode="contain"
+        />
+        <Text style={styles.title}>Startien</Text>
+      </View>
+      <View style={styles.formContainer}>
+        <TextInput
+          style={styles.input}
+          value={email}
+          onChangeText={setEmail}
+          placeholder="Email..."
+          keyboardType="email-address"
+          autoCapitalize="none"
+        />
+        <TextInput
+          style={styles.input}
+          value={password}
+          onChangeText={setPassword}
+          placeholder="Password"
+          secureTextEntry
+        />
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.button} onPress={handleLogin}>
+            <Text style={styles.buttonText}>Login Now</Text>
+          </TouchableOpacity>
+          <Text style={styles.secondaryText}>Don't have an Account?</Text>
+          <TouchableOpacity style={[styles.button, styles.secondaryButton]} onPress={() => navigation.replace('SignUpScreen')}>
+            <Text style={styles.buttonText}>Sign Up Now</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#F0F4F8',
+    justifyContent: 'center',
+    padding: 20,
+  },
+  content: {
+    alignItems: 'center',
+    marginBottom: 40,
+  },
+  logo: {
+    width: '50%',
+    height: undefined,
+    aspectRatio: 1,
+  },
+  title: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    color: '#6200ea',
+    marginTop: 20,
+    textAlign: 'center',
+  },
+  formContainer: {
+    backgroundColor: '#FFFFFF',
+    padding: 20,
+    paddingVertical: 30,
+    borderRadius: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  input: {
+    height: 50,
+    backgroundColor: '#EFEFEF',
+    borderRadius: 50,
+    paddingHorizontal: 15,
+    marginBottom: 15,
+  },
+  button: {
+    backgroundColor: '#6200ea',
+    height: 40,
+    borderRadius: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 15,
+  },
+  secondaryButton: {
+    backgroundColor: '#707070',
+  },
+  buttonText: {
+    color: '#FFFFFF',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  secondaryText: {
+    alignSelf: 'center',
+    fontWeight: 'bold',
+    marginBottom: 10,
+    fontSize: 14,
+    color: '#20129D',
+  },
+  buttonContainer: {
+    marginTop: 10,
+    paddingHorizontal: 20,
+  }
+});
+
+export default LoginScreen;

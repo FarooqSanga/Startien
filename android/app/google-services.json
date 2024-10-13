@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "678562136700",
+    "firebase_url": "https://startien-classified-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "startien-classified",
+    "storage_bucket": "startien-classified.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:678562136700:android:23f378212e1536f19bfff9",
+        "android_client_info": {
+          "package_name": "com.startienclassified"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6RBwayhvjYsDWK6ecaFtmsWDU4FIvwwM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

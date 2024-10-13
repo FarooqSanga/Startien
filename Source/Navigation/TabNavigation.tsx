@@ -68,7 +68,7 @@ const TabNavigation:FunctionComponent<Props> = ({}) => {
       })}
     >
       <Tab.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
-      <Tab.Screen name="Chats" component={ChatsScreen} />
+      <Tab.Screen name="Chats" component={ChatsScreen} options={{ headerShown: false }}/>
       {/* <Tab.Screen
         name="List"
         component={CreateAdScreen}
@@ -80,8 +80,8 @@ const TabNavigation:FunctionComponent<Props> = ({}) => {
           ),
         }}
       /> */}
-      <Tab.Screen name="My Ads" component={MyAdsScreen} />
-      <Tab.Screen name="Account" component={AccountScreen} />
+      <Tab.Screen name="My Ads" component={MyAdsScreen} options={{ headerShown: false }}/>
+      <Tab.Screen name="Account" component={AccountScreen} options={{ headerShown: false }}/>
     </Tab.Navigator>
   );
 };

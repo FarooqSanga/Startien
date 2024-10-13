@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'; // Import FontAwesomeIcon
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons'; // FontAwesome icon for chevron
 import {
@@ -18,12 +18,36 @@ import {
   faQuestionCircle,
   faSignOutAlt,
 } from '@fortawesome/free-solid-svg-icons'; // Import other FontAwesome icons as needed
+// import { useNavigation } from '@react-navigation/native';
+import { getAuth, signOut } from '@react-native-firebase/auth';
+import CustomStatusBar from '../../Components/customStatusBar';
+type Props = {
+  navigation:any
+}
+const AccountScreen: React.FC<Props> = ({ navigation }) => {
+  // const navigation = useNavigation();
+  const auth = getAuth();
+  const handleProfilePress = async () => {
+    
+      navigation.navigate("ProfileScreen");
+    
+    
+  };
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      // Navigate to the login screen after successful logout
+      navigation.navigate("LoginScreen");
+    } catch (error) {
+      // Handle errors here
+      Alert.alert('Logout Error', error.message);
+    }
+  };
 
-const AccountScreen: React.FC = () => {
   // Define menu items dynamically with FontAwesome icons
   const menuItems = [
     { title: 'My Name', icon: faUser },
-    { title: 'View and edit profile', icon: faCog },
+    { title: 'View and edit profile', icon: faCog, onPress: handleProfilePress },
     { title: 'Favorites & Saved searches', icon: faHeart },
     // { title: 'All of your favorite ads & saved filters', icon: faFileAlt },
     { title: 'Public Profile', icon: faUsers },
@@ -37,7 +61,7 @@ const AccountScreen: React.FC = () => {
     { title: 'Settings', icon: faCog },
     { title: 'Privacy and manage account', icon: faShieldAlt },
     { title: 'Help and Support', icon: faQuestionCircle },
-    { title: 'Logout', icon: faSignOutAlt },
+    { title: 'Logout', icon: faSignOutAlt, onPress: handleLogout }, // Add the handleLogout function here
   ];
 
   // Render each menu item
@@ -52,13 +76,18 @@ const AccountScreen: React.FC = () => {
   };
 
   return (
+    <View>
+            <CustomStatusBar backgroundColor="#6200ea" barStyle="light-content" />
+
+    
     <ScrollView contentContainerStyle={styles.container}>
       {menuItems.map((item, index) => (
         <React.Fragment key={index}>
-          {renderMenuItem(item.title, item.icon, () => {})}
+          {renderMenuItem(item.title, item.icon, item.onPress || (() => {}))}
         </React.Fragment>
       ))}
     </ScrollView>
+    </View>
   );
 };
 

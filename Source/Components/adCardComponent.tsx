@@ -1,22 +1,24 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useNavigation } from '@react-navigation/native';
 
 interface AdCardProps {
   ad: {
     id: string;
-    picture: string; // Assume it's a URI
+    featuredImage?: string; // Changed from 'picture' to 'featuredImage' to match expected prop
     price: string;
     title: string;
-    features: string[];
+    features?: string[]; // Optional, to handle missing or undefined features
     location: string;
     postedDate: string;
   };
 }
 
 const AdCard: React.FC<AdCardProps> = ({ ad }) => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>(); // Fix TypeScript error by typing navigation
+
+  const defaultImageUri = 'https://via.placeholder.com/150'; // Replace with your desired default image URI
 
   const handlePress = () => {
     // Navigate to ViewAdScreen and pass ad details
@@ -25,9 +27,12 @@ const AdCard: React.FC<AdCardProps> = ({ ad }) => {
 
   return (
     <TouchableOpacity style={styles.adContainer} onPress={handlePress}>
-      {/* Placeholder for Image */}
+      {/* Image Section */}
       <View style={styles.adImageContainer}>
-        <View style={styles.placeholderImage} />
+        <Image
+          source={{ uri: ad.featuredImage || defaultImageUri }} // Use default image if featuredImage is not provided
+          style={styles.adImage}
+        />
         <TouchableOpacity style={styles.adFavoriteButton}>
           <Icon name="star-o" size={20} color="#FFD700" />
         </TouchableOpacity>
@@ -37,15 +42,15 @@ const AdCard: React.FC<AdCardProps> = ({ ad }) => {
         <Text style={styles.adTitle} numberOfLines={2}>{ad.title}</Text>
         <Text style={styles.adPrice}>{ad.price}</Text>
         <View style={styles.adFeaturesContainer}>
-          {ad.features.map((feature, index) => (
+          {(ad.features || []).map((feature, index) => (
             <Text key={index} style={styles.adFeature}>{feature}</Text>
           ))}
         </View>
         <View style={styles.adLocationContainer}>
           <Icon name="map-marker" size={16} color="#777" style={styles.locationIcon} />
           <Text style={styles.adLocation}>{ad.location}</Text>
-          <Text style={styles.adPostedDate}>{ad.postedDate}</Text>
         </View>
+        <Text style={styles.adPostedDate}>{ad.postedDate}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -53,23 +58,24 @@ const AdCard: React.FC<AdCardProps> = ({ ad }) => {
 
 const styles = StyleSheet.create({
   adContainer: {
-    flexDirection: 'row',
+    width: '48%', // To fit two items per row with margin
     borderWidth: 1,
     borderRadius: 8,
     backgroundColor: '#FFFFFF',
     overflow: 'hidden',
     marginBottom: 10,
+    marginHorizontal: '1%', // Small margin between items
   },
   adImageContainer: {
-    width: 120,
-    height: 150,
+    width: '100%',
+    aspectRatio: 1, // Ensure the image has a square ratio
     position: 'relative',
     backgroundColor: '#f0f0f0',
   },
-  placeholderImage: {
+  adImage: {
     width: '100%',
     height: '100%',
-    backgroundColor: '#ccc',
+    resizeMode: 'cover', // Ensures the image covers the container properly
   },
   adFavoriteButton: {
     position: 'absolute',
@@ -80,44 +86,46 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   adDetails: {
-    flex: 1,
-    padding: 10,
+    padding: 8,
   },
   adTitle: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: 'bold',
-    marginBottom: 5,
+    marginBottom: 4,
   },
   adPrice: {
     fontSize: 14,
     fontWeight: 'bold',
-    alignSelf: 'flex-end',
-    marginBottom: 5,
-    color: '#FF5733', // Adjust color as needed
+    color: '#FF5733',
+    marginBottom: 4,
   },
   adFeaturesContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    marginBottom: 5,
+    marginBottom: 4,
   },
   adFeature: {
     color: '#555',
-    marginRight: 10,
-    marginBottom: 5,
+    marginRight: 8,
+    marginBottom: 2,
+    fontSize: 12,
   },
   adLocationContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginBottom: 2,
   },
   locationIcon: {
-    marginRight: 5,
+    marginRight: 4,
   },
   adLocation: {
     color: '#777',
     marginRight: 5,
+    fontSize: 12,
   },
   adPostedDate: {
     color: '#777',
+    fontSize: 12,
   },
 });
 

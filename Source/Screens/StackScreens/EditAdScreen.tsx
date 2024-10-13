@@ -1,12 +1,22 @@
-import React from 'react';
-import { View, Text, StyleSheet, ScrollView, Image } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  Image,
+  TextInput,
+  TouchableOpacity,
+  Alert,
+} from 'react-native';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from './../../Navigation/types';
-import adsData from './../../JSON/adData.json';
+import database from '@react-native-firebase/database';
+import storage from '@react-native-firebase/storage';
+import auth from '@react-native-firebase/auth';
 
 type EditAdScreenRouteProp = RouteProp<RootStackParamList, 'EditAdScreen'>;
-
 type EditAdScreenNavigationProp = StackNavigationProp<RootStackParamList, 'EditAdScreen'>;
 
 type Props = {
@@ -14,17 +24,80 @@ type Props = {
   navigation: EditAdScreenNavigationProp;
 };
 
-const EditAdScreen: React.FC<Props> = ({ route }) => {
-  const { adId } = route.params;
-  const ad = adsData.ads.find((item) => item.listingId === adId);
+const EditAdScreen: React.FC<Props> = ({ route, navigation }) => {
+  const { ad } = route.params;
+  
+  const [title, setTitle] = useState(ad.title || '');
+  const [description, setDescription] = useState(ad.description || '');
+  const [price, setPrice] = useState(ad.price || '');
+  const [location, setLocation] = useState(ad.location || '');
+  const [sellerName, setSellerName] = useState(ad.sellerInfo?.name || '');
+  const [sellerEmail, setSellerEmail] = useState(ad.sellerInfo?.email || '');
+  const [sellerPhone, setSellerPhone] = useState(ad.sellerInfo?.phone || '');
+  const [profilePicture, setProfilePicture] = useState(ad.sellerInfo?.profilePicture || '');
+  const [images, setImages] = useState(ad.images || []);
+  const [status, setStatus] = useState(ad.transaction?.status || '');
 
-  if (!ad) {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.title}>Ad not found</Text>
-      </View>
-    );
-  }
+  // Fetch ad details when screen loads
+  useEffect(() => {
+    const fetchAdDetails = async () => {
+      try {
+        const adSnapshot = await database().ref(`users/${auth().currentUser?.uid}/ads/${ad.listingId}`).once('value');
+        const adData = adSnapshot.val();
+        if (adData) {
+          setTitle(adData.title || '');
+          setDescription(adData.description || '');
+          setPrice(adData.price || '');
+          setLocation(adData.location || '');
+          setSellerName(adData.sellerInfo?.name || '');
+          setSellerEmail(adData.sellerInfo?.email || '');
+          setSellerPhone(adData.sellerInfo?.phone || '');
+          setProfilePicture(adData.sellerInfo?.profilePicture || '');
+          setImages(adData.images || []);
+          setStatus(adData.transaction?.status || '');
+        }
+      } catch (error) {
+        Alert.alert('Error', 'Failed to fetch ad details');
+      }
+    };
+
+    fetchAdDetails();
+  }, [ad.listingId]);
+
+  // Handle Save Changes
+  const handleSave = async () => {
+    if (!title || !description || !price || !location) {
+      Alert.alert('Validation Error', 'Please fill all required fields');
+      return;
+    }
+
+    try {
+      const updatedAd = {
+        ...ad,
+        title,
+        description,
+        price,
+        location,
+        sellerInfo: {
+          name: sellerName,
+          email: sellerEmail,
+          phone: sellerPhone,
+          profilePicture,
+        },
+        images,
+        transaction: {
+          ...ad.transaction,
+          status,
+        },
+      };
+
+      await database().ref(`users/${auth().currentUser?.uid}/ads/${ad.listingId}`).update(updatedAd);
+      Alert.alert('Success', 'Ad updated successfully');
+      navigation.goBack();
+    } catch (error) {
+      Alert.alert('Error', 'Failed to update ad');
+    }
+  };
 
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
@@ -34,20 +107,31 @@ const EditAdScreen: React.FC<Props> = ({ route }) => {
       <View style={styles.card}>
         <Text style={styles.cardTitle}>Basic Details</Text>
         <View style={styles.cardContent}>
-          <Text style={styles.label}>Ad ID:</Text>
-          <Text style={styles.value}>{ad.listingId}</Text>
-        </View>
-        <View style={styles.cardContent}>
           <Text style={styles.label}>Title:</Text>
-          <Text style={styles.value}>{ad.title}</Text>
+          <TextInput
+            style={styles.input}
+            value={title}
+            onChangeText={setTitle}
+          />
         </View>
         <View style={styles.cardContent}>
           <Text style={styles.label}>Description:</Text>
-          <Text style={styles.value}>{ad.description}</Text>
+          <TextInput
+            style={[styles.input, styles.textArea]}
+            value={description}
+            onChangeText={setDescription}
+            multiline
+            numberOfLines={4}
+          />
         </View>
         <View style={styles.cardContent}>
           <Text style={styles.label}>Price:</Text>
-          <Text style={styles.value}>{`${ad.price} ${ad.currency}`}</Text>
+          <TextInput
+            style={styles.input}
+            value={price}
+            onChangeText={setPrice}
+            keyboardType="numeric"
+          />
         </View>
       </View>
 
@@ -56,19 +140,32 @@ const EditAdScreen: React.FC<Props> = ({ route }) => {
         <Text style={styles.cardTitle}>Seller Information</Text>
         <View style={styles.cardContent}>
           <Text style={styles.label}>Name:</Text>
-          <Text style={styles.value}>{ad.sellerInfo.name}</Text>
+          <TextInput
+            style={styles.input}
+            value={sellerName}
+            onChangeText={setSellerName}
+          />
         </View>
         <View style={styles.cardContent}>
           <Text style={styles.label}>Email:</Text>
-          <Text style={styles.value}>{ad.sellerInfo.email}</Text>
+          <TextInput
+            style={styles.input}
+            value={sellerEmail}
+            onChangeText={setSellerEmail}
+          />
         </View>
         <View style={styles.cardContent}>
           <Text style={styles.label}>Phone:</Text>
-          <Text style={styles.value}>{ad.sellerInfo.phone}</Text>
+          <TextInput
+            style={styles.input}
+            value={sellerPhone}
+            onChangeText={setSellerPhone}
+            keyboardType="phone-pad"
+          />
         </View>
-        {ad.sellerInfo.profilePicture && (
+        {profilePicture && (
           <Image
-            source={{ uri: ad.sellerInfo.profilePicture }}
+            source={{ uri: profilePicture }}
             style={styles.profilePicture}
             resizeMode="cover"
           />
@@ -80,15 +177,11 @@ const EditAdScreen: React.FC<Props> = ({ route }) => {
         <Text style={styles.cardTitle}>Location</Text>
         <View style={styles.cardContent}>
           <Text style={styles.label}>City:</Text>
-          <Text style={styles.value}>{ad.location.city}</Text>
-        </View>
-        <View style={styles.cardContent}>
-          <Text style={styles.label}>State:</Text>
-          <Text style={styles.value}>{ad.location.state}</Text>
-        </View>
-        <View style={styles.cardContent}>
-          <Text style={styles.label}>Country:</Text>
-          <Text style={styles.value}>{ad.location.country}</Text>
+          <TextInput
+            style={styles.input}
+            value={location}
+            onChangeText={setLocation}
+          />
         </View>
       </View>
 
@@ -96,7 +189,7 @@ const EditAdScreen: React.FC<Props> = ({ route }) => {
       <View style={styles.card}>
         <Text style={styles.cardTitle}>Images</Text>
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          {ad.images.map((imageUrl, index) => (
+          {images.map((imageUrl, index) => (
             <Image
               key={index}
               source={{ uri: imageUrl }}
@@ -112,13 +205,17 @@ const EditAdScreen: React.FC<Props> = ({ route }) => {
         <Text style={styles.cardTitle}>Transaction Details</Text>
         <View style={styles.cardContent}>
           <Text style={styles.label}>Status:</Text>
-          <Text style={styles.value}>{ad.transaction.status}</Text>
-        </View>
-        <View style={styles.cardContent}>
-          <Text style={styles.label}>Price:</Text>
-          <Text style={styles.value}>{`${ad.transaction.price} ${ad.currency}`}</Text>
+          <TextInput
+            style={styles.input}
+            value={status}
+            onChangeText={setStatus}
+          />
         </View>
       </View>
+
+      <TouchableOpacity style={styles.button} onPress={handleSave}>
+        <Text style={styles.buttonText}>Save Changes</Text>
+      </TouchableOpacity>
     </ScrollView>
   );
 };
@@ -128,11 +225,6 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     backgroundColor: '#f0f0f0',
     padding: 16,
-  },
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   title: {
     fontSize: 24,
@@ -163,12 +255,20 @@ const styles = StyleSheet.create({
   },
   label: {
     fontWeight: 'bold',
-    width: 100,
+    width: 120,
   },
-  value: {
+  input: {
+    height: 40,
+    borderColor: '#ddd',
+    borderWidth: 1,
+    borderRadius: 10,
+    paddingHorizontal: 10,
+    backgroundColor: '#fff',
     flex: 1,
-    marginLeft: 10,
-    fontSize: 16,
+  },
+  textArea: {
+    height: 100,
+    textAlignVertical: 'top',
   },
   profilePicture: {
     width: 80,
@@ -181,6 +281,17 @@ const styles = StyleSheet.create({
     height: 120,
     borderRadius: 8,
     marginRight: 8,
+  },
+  button: {
+    backgroundColor: '#007BFF',
+    padding: 16,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
 });
 
