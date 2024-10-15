@@ -16,6 +16,10 @@ import CompleteProfileScreen from '../Screens/StackScreens/CompleteProfileScreen
 import ProfileScreen from '../Screens/StackScreens/profileScreen';
 import ChatsScreen from '../Screens/TabScreens/chatsScreen';
 import FilterAdsScreen from '../Screens/StackScreens/FilterAdsScreen';
+import SavedAdsScreen from '../Screens/StackScreens/savedAdsScreen';
+import MyShopDetailScreen from '../Screens/StackScreens/myShopScreen';
+import MarketListScreen from '../Screens/TabScreens/marketScreen';
+import ShopDetailScreen from '../Screens/StackScreens/shopDetailsScreen';
 // import ViewEditProfileScreen from '../Screens/StackScreens/ViewEditProfileScreen';
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -36,7 +40,17 @@ const MyStack: React.FC = () => {
         <Stack.Screen name="CompleteProfileScreen" component={CompleteProfileScreen}  options={{headerShown:false}}/>
         <Stack.Screen name="ProfileScreen" component={ProfileScreen}  options={{headerShown:false}}/>
         <Stack.Screen name="ChatsScreen" component={ChatsScreen}  options={{headerShown:false}}/>
-        <Stack.Screen name="FilterAdsScreen" component={FilterAdsScreen} />
+        <Stack.Screen name="FilterAdsScreen" component={FilterAdsScreen} options={{headerShown:false}}/>
+        <Stack.Screen name="SavedAdsScreen" component={SavedAdsScreen} options={{headerShown:false}}/>
+        <Stack.Screen name="MyShopDetailScreen" component={MyShopDetailScreen} options={{headerShown:false}}/>
+        <Stack.Screen name="MarketListScreen" component={MarketListScreen} options={{headerShown:false}}/>
+        <Stack.Screen name="ShopDetailScreen" component={ShopDetailScreen} options={{headerShown:false}}/>
+
+        
+        
+        
+
+        
 
 
         {/* <Stack.Screen name="ViewEditProfileScreen" component={ViewEditProfileScreen}  options={{headerShown:false}}/> */}

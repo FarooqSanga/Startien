@@ -1,15 +1,17 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useNavigation } from '@react-navigation/native';
+import auth from '@react-native-firebase/auth'; // For user ID
+import database from '@react-native-firebase/database'; // For Firebase Database operations
 
 interface AdCardProps {
   ad: {
     id: string;
-    featuredImage?: string; // Changed from 'picture' to 'featuredImage' to match expected prop
+    featuredImage?: string;
     price: string;
     title: string;
-    features?: string[]; // Optional, to handle missing or undefined features
+    features?: string[];
     location: string;
     postedDate: string;
   };
@@ -17,12 +19,58 @@ interface AdCardProps {
 
 const AdCard: React.FC<AdCardProps> = ({ ad }) => {
   const navigation = useNavigation<any>(); // Fix TypeScript error by typing navigation
+  const [isSaved, setIsSaved] = useState(false); // State to track if the ad is saved
+  const userID = auth().currentUser?.uid; // Get the current user's ID
 
   const defaultImageUri = 'https://via.placeholder.com/150'; // Replace with your desired default image URI
+
+  useEffect(() => {
+    if (userID) {
+      const savedAdRef = database().ref(`users/${userID}/savedAds/${ad.id}`);
+
+      // Listen for real-time changes to see if the ad is saved
+      savedAdRef.on('value', (snapshot) => {
+        if (snapshot.exists()) {
+          setIsSaved(true); // Ad is saved
+        } else {
+          setIsSaved(false); // Ad is not saved
+        }
+      });
+
+      // Clean up the listener when the component unmounts
+      return () => savedAdRef.off();
+    }
+  }, [userID, ad.id]);
 
   const handlePress = () => {
     // Navigate to ViewAdScreen and pass ad details
     navigation.navigate('ViewAdScreen', { ad });
+  };
+
+  const toggleSaveAd = () => {
+    if (!userID) return; // Ensure user is logged in
+
+    const savedAdRef = database().ref(`users/${userID}/savedAds/${ad.id}`);
+
+    if (isSaved) {
+      // Remove from savedAds if already saved
+      savedAdRef.remove()
+        .then(() => {
+          setIsSaved(false); // Update UI to show the ad is unsaved
+        })
+        .catch(error => {
+          console.error("Error removing ad from savedAds: ", error);
+        });
+    } else {
+      // Add to savedAds if not already saved
+      savedAdRef.set(true) // Save only a flag or reference, instead of the entire ad object
+        .then(() => {
+          setIsSaved(true); // Update UI to show the ad is saved
+        })
+        .catch(error => {
+          console.error("Error saving ad: ", error);
+        });
+    }
   };
 
   return (
@@ -33,8 +81,9 @@ const AdCard: React.FC<AdCardProps> = ({ ad }) => {
           source={{ uri: ad.featuredImage || defaultImageUri }} // Use default image if featuredImage is not provided
           style={styles.adImage}
         />
-        <TouchableOpacity style={styles.adFavoriteButton}>
-          <Icon name="star-o" size={20} color="#FFD700" />
+        <TouchableOpacity style={styles.adFavoriteButton} onPress={toggleSaveAd}>
+          {/* Change star color based on whether the ad is saved */}
+          <Icon name={isSaved ? "star" : "star-o"} size={28} color={isSaved ? "#FFD700" : "#000"} />
         </TouchableOpacity>
       </View>
       {/* Details Section */}
@@ -83,6 +132,7 @@ const styles = StyleSheet.create({
     right: 10,
     backgroundColor: 'rgba(255, 255, 255, 0.8)',
     padding: 5,
+    aspectRatio:1,
     borderRadius: 20,
   },
   adDetails: {

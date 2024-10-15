@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { View, FlatList, StyleSheet, Text } from 'react-native';
-import CityPicker from './CityPicker';
-import SearchInput from './searchInputComponent';
-import AdCard from './adCardComponent';
+import AdCard from './adCardComponent'; // Import your AdCard component
 import database from '@react-native-firebase/database';
 import LocationInput from './locationComponent';
+import SearchInput from './searchInputComponent';
 
 interface FilterAdsComponentProps {
   category: string;
@@ -56,10 +55,7 @@ const FilterAdsComponent: React.FC<FilterAdsComponentProps> = ({ category }) => 
 
   return (
     <View style={styles.container}>
-      {/* <CityPicker selectedCity={selectedCity} setSelectedCity={setSelectedCity} cities={['New York', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix']} /> */}
-      <LocationInput selectedLocation={selectedCity} setSelectedLocation={setSelectedCity} /> 
-
-
+      <LocationInput selectedLocation={selectedCity} setSelectedLocation={setSelectedCity} />
       <SearchInput searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
 
       {filteredAds.length > 0 ? (
@@ -67,6 +63,8 @@ const FilterAdsComponent: React.FC<FilterAdsComponentProps> = ({ category }) => 
           data={filteredAds}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => <AdCard ad={item} />}
+          numColumns={2} // Display 2 items per row
+          columnWrapperStyle={styles.row} // Ensure spacing between columns
           contentContainerStyle={styles.flatListContent}
         />
       ) : (
@@ -85,6 +83,10 @@ const styles = StyleSheet.create({
   },
   flatListContent: {
     paddingBottom: 20,
+  },
+  row: {
+    justifyContent: 'space-between',
+    marginBottom: 10,
   },
   noResultsText: {
     textAlign: 'center',

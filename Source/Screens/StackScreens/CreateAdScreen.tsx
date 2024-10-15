@@ -50,7 +50,7 @@ const CreateAdScreen: React.FC<Props> = ({ navigation }) => {
   const [category, setCategory] = useState<string | null>(null);
   const [subcategory, setSubcategory] = useState<string | null>(null);
   const [location, setLocation] = useState('');
-  const [selectedCity, setSelectedCity] = useState('');
+  const [selectedCity, setSelectedCity] = useState('Karachi');
   const [additionalImages, setAdditionalImages] = useState<string[]>([]);
   const [contactInfo, setContactInfo] = useState('');
   const [featuredImage, setFeaturedImage] = useState<string | null>(null);
@@ -125,7 +125,7 @@ const CreateAdScreen: React.FC<Props> = ({ navigation }) => {
   };
 
   const handlePublish = async () => {
-    if (!title || !description || !price || !category || !subcategory || !location) {
+    if (!title || !description || !price || !category || !subcategory || !location ) {
       Alert.alert('Validation Error', 'Please fill all required fields');
       return;
     }

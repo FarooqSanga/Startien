@@ -1,5 +1,6 @@
 import React, { FunctionComponent } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { StatusBar, StyleSheet } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context'; // Import SafeAreaView from react-native-safe-area-context
 import FilterAdsComponent from '../../Components/FilterAdsComponent';
 
 type Props = {
@@ -11,9 +12,12 @@ const FilterAdsScreen: FunctionComponent<Props> = ({ route, navigation }) => {
   const { category } = route.params;
 
   return (
-    <View style={styles.container}>
-      <FilterAdsComponent category={category} />
-    </View>
+    <>
+      <StatusBar barStyle="light-content" backgroundColor="#6200ea" />
+      <SafeAreaView style={styles.container}>
+        <FilterAdsComponent category={category} />
+      </SafeAreaView>
+    </>
   );
 };
 

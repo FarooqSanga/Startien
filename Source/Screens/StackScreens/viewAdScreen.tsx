@@ -121,43 +121,47 @@ const ViewAdScreen: React.FC<ViewAdScreenProps> = ({ route }) => {
 
   const handleChat = async () => {
     const currentUser = auth().currentUser;
-    if (!currentUser || !ad.userId) return;
+    if (!currentUser) return;
   
     const chatTitle = ad.title;
     const featuredImage = ad.featuredImage;
-    const chatRef = database().ref('chats').push();
-    const chatId = chatRef.key;  // This can be null, so we check it
-  
-    if (!chatId) {
-      console.error('Error: Chat ID is null');
-      return; // Exit if chatId is null
-    }
-  
+    const chatRef = database().ref('chats').push(); // Create a new chat reference
+    const chatId = chatRef.key;
     const timestamp = Date.now();
   
     try {
-      // Set chat data in the 'chats' node in Firebase
+      // Fetch adPublisherID from the database using the ad's ID (ad.id)
+      const adPublisherSnapshot = await database().ref(`adsCollection/${ad.id}/adPublisherID`).once('value');
+      const adPublisherID = adPublisherSnapshot.val();
+  
+      // Log adPublisherID for debugging
+      console.log('Fetched adPublisherID:', adPublisherID);
+  
+      if (!adPublisherID) {
+        console.error('Error: adPublisherID is undefined');
+        return;
+      }
+  
+      // Set up the chat
       await chatRef.set({
         title: chatTitle,
         createdBy: currentUser.uid,
         members: {
-          [currentUser.uid]: true, // Add buyer (current user) to members
-          [ad.userId]: true, // Add ad publisher to members
+          [currentUser.uid]: true,
+          [adPublisherID]: true,  // Add the ad publisher to the chat
         },
         featuredImage,
         timestamp,
       });
   
-      // Add chat ID to the buyer's chat list
-      const buyerChatsRef = database().ref(`users/${currentUser.uid}/chats`);
-      await buyerChatsRef.update({ [chatId]: true });
+      // Update both users' chats
+      const userChatsRef = database().ref(`users/${currentUser.uid}/chats`);
+      await userChatsRef.update({ [chatId]: true });
   
-      // Add chat ID to the ad publisher's chat list
-      const sellerChatsRef = database().ref(`users/${ad.userId}/chats`);
+      const sellerChatsRef = database().ref(`users/${adPublisherID}/chats`);
       await sellerChatsRef.update({ [chatId]: true });
   
-      // Navigate to the chats list screen
-      navigation.navigate('ChatsScreen');
+      navigation.navigate('ChatsScreen'); // Navigate to Chats Screen after successful creation
     } catch (error) {
       console.error('Error creating chat:', error);
     }

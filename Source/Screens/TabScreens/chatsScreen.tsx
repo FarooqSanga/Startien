@@ -151,9 +151,11 @@ const ChatsScreen: FunctionComponent<Props> = ({ navigation }) => {
         {!isConnected && <NoInternetConnection onRetry={() => setIsScreenRefreshing(true)} />}
         {isConnected && !isScreenRefreshing && (
           <>
-            <Text style={styles.emptyText}>No Chats available</Text>
-            <Text style={[styles.emptyText, { color: 'darkgrey', marginTop: 30 }]}>
-              Go to Home Screen and Report a Problem to Start Chat
+            <Text style={styles.emptyText}>No chats available</Text>
+            <Text style={[styles.emptyText, { color: 'darkgrey', marginTop: 30, paddingHorizontal:30,
+              textAlign:'center',
+             }]}>
+              Go to Home Screen and View an Ad, and start a chat.
             </Text>
           </>
         )}
