@@ -3,6 +3,10 @@ import { View, TouchableOpacity, StyleSheet, Pressable } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+
+
+
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import HomeScreen from '../Screens/TabScreens/homeScreen';
 import ChatsScreen from '../Screens/TabScreens/chatsScreen';
@@ -10,6 +14,7 @@ import MyAdsScreen from '../Screens/TabScreens/myAdsScreen';
 import AccountScreen from '../Screens/TabScreens/accountScreen';
 import CreateAdScreen from '../Screens/StackScreens/CreateAdScreen';
 import { useNavigation } from '@react-navigation/native';
+import MarketListScreen from '../Screens/TabScreens/marketScreen';
 
 const Tab = createBottomTabNavigator();
 type Props = {
@@ -41,6 +46,9 @@ const TabNavigation:FunctionComponent<Props> = ({}) => {
           } else if (route.name === 'My Ads') {
             iconName = 'th-list';
             return <FontAwesome name={iconName} size={size} color={color} />;
+          } else if (route.name === 'Market') {
+            iconName = 'shopping-bag';
+            return <MaterialIcons name={iconName} size={size} color={color} />;
           } else if (route.name === 'Account') {
             iconName = 'user';
             return <FontAwesome name={iconName} size={size} color={color} />;
@@ -68,7 +76,9 @@ const TabNavigation:FunctionComponent<Props> = ({}) => {
       })}
     >
       <Tab.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
-      <Tab.Screen name="Chats" component={ChatsScreen} />
+      <Tab.Screen name="Chats" component={ChatsScreen} options={{ headerShown: false }}/>
+      <Tab.Screen name="Market" component={MarketListScreen} options={{ headerShown: false }}/>
+
       {/* <Tab.Screen
         name="List"
         component={CreateAdScreen}
@@ -80,8 +90,8 @@ const TabNavigation:FunctionComponent<Props> = ({}) => {
           ),
         }}
       /> */}
-      <Tab.Screen name="My Ads" component={MyAdsScreen} />
-      <Tab.Screen name="Account" component={AccountScreen} />
+      <Tab.Screen name="My Ads" component={MyAdsScreen} options={{ headerShown: false }}/>
+      <Tab.Screen name="Account" component={AccountScreen} options={{ headerShown: false }}/>
     </Tab.Navigator>
   );
 };

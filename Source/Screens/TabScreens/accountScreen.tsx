@@ -1,43 +1,61 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'; // Import FontAwesomeIcon
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons'; // FontAwesome icon for chevron
 import {
   faUser,
   faCog,
   faHeart,
-  faFileAlt,
   faUsers,
-  faEye,
-  faTags,
-  faMoneyBillAlt,
-  faReceipt,
-  faBox,
-  faLocationArrow,
   faShieldAlt,
   faQuestionCircle,
   faSignOutAlt,
+  faBookmark,  // Icon for Saved Ads
+  faStore,     // Icon for Shop (New for Manage My Shop)
 } from '@fortawesome/free-solid-svg-icons'; // Import other FontAwesome icons as needed
+import { getAuth, signOut } from '@react-native-firebase/auth';
+import CustomStatusBar from '../../Components/customStatusBar';
 
-const AccountScreen: React.FC = () => {
+type Props = {
+  navigation: any;
+};
+
+const AccountScreen: React.FC<Props> = ({ navigation }) => {
+  const auth = getAuth();
+
+  const handleProfilePress = async () => {
+    navigation.navigate("ProfileScreen");
+  };
+
+  const handleSavedAdsPress = async () => {
+    navigation.navigate("SavedAdsScreen");
+  };
+
+  const handleManageShopPress = async () => {
+    navigation.navigate("MyShopDetailScreen"); // This will navigate to MyShopScreen
+  };
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      navigation.navigate("LoginScreen");
+    } catch (error) {
+      Alert.alert('Logout Error', error.message);
+    }
+  };
+
   // Define menu items dynamically with FontAwesome icons
   const menuItems = [
     { title: 'My Name', icon: faUser },
-    { title: 'View and edit profile', icon: faCog },
+    { title: 'View and edit profile', icon: faCog, onPress: handleProfilePress },
     { title: 'Favorites & Saved searches', icon: faHeart },
-    // { title: 'All of your favorite ads & saved filters', icon: faFileAlt },
+    { title: 'Saved Ads', icon: faBookmark, onPress: handleSavedAdsPress }, // New "Saved Ads" item
+    { title: 'Manage My Shop', icon: faStore, onPress: handleManageShopPress }, // "Manage My Shop" added here
     { title: 'Public Profile', icon: faUsers },
-    // { title: 'See how others view your profile', icon: faEye },
-    // { title: 'Buy Discounted Packages', icon: faTags },
-    // { title: 'Sell faster, more & at higher margins with packages', icon: faMoneyBillAlt },
-    // { title: 'Orders and Billing Info', icon: faReceipt },
-    // { title: 'Orders, billing and invoices', icon: faBox },
-    // { title: 'Delivery Orders', icon: faLocationArrow },
-    // { title: 'Track your selling or buying delivery orders', icon: faLocationArrow },
     { title: 'Settings', icon: faCog },
     { title: 'Privacy and manage account', icon: faShieldAlt },
     { title: 'Help and Support', icon: faQuestionCircle },
-    { title: 'Logout', icon: faSignOutAlt },
+    { title: 'Logout', icon: faSignOutAlt, onPress: handleLogout }, // Add the handleLogout function here
   ];
 
   // Render each menu item
@@ -52,13 +70,16 @@ const AccountScreen: React.FC = () => {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      {menuItems.map((item, index) => (
-        <React.Fragment key={index}>
-          {renderMenuItem(item.title, item.icon, () => {})}
-        </React.Fragment>
-      ))}
-    </ScrollView>
+    <View>
+      <CustomStatusBar backgroundColor="#6200ea" barStyle="light-content" />
+      <ScrollView contentContainerStyle={styles.container}>
+        {menuItems.map((item, index) => (
+          <React.Fragment key={index}>
+            {renderMenuItem(item.title, item.icon, item.onPress || (() => {}))}
+          </React.Fragment>
+        ))}
+      </ScrollView>
+    </View>
   );
 };
 

@@ -1,15 +1,212 @@
 [
-  { "name": "Vehicles", "icon": "🚗" },
-  { "name": "Property", "icon": "🏠" },
-  { "name": "Mobiles", "icon": "📱" },
-  { "name": "Electronics", "icon": "💻" },
-  { "name": "Home Appliances", "icon": "🏠" },
-  { "name": "Services", "icon": "🔧" },
-  { "name": "Jobs", "icon": "💼" },
-  { "name": "Animals", "icon": "🐾" },
-  { "name": "Furniture", "icon": "🛏️" },
+  { "name": "Vehicles", "icon": "🚗", "subcategories": [
+      { "name": "Cars", "icon": "🚙" },
+      { "name": "Cars Accessories", "icon": "🛠️" },
+      { "name": "Spare Parts", "icon": "🔧" },
+      { "name": "Buses, Vans & Trucks", "icon": "🚍" },
+      { "name": "Rickshaw & Chingchi", "icon": "🛺" },
+      { "name": "Tractors & Trailers", "icon": "🚜" },
+      { "name": "Cars on Installments", "icon": "📅" },
+      { "name": "Other Vehicles", "icon": "🚐" },
+      { "name": "Boats", "icon": "🚤" }
+    ]
+  },
+  { "name": "Property", "icon": "🏠", "subcategories": [
+      { "name": "For Sale", "icon": "🏡", "subcategories": [
+          { "name": "Land & Plots", "icon": "🌍" },
+          { "name": "Houses", "icon": "🏠" },
+          { "name": "Apartments & Flats", "icon": "🏢" },
+          { "name": "Shops - Offices - Commercial Space", "icon": "🏬" },
+          { "name": "Portions & Floors", "icon": "🏠" }
+        ]
+      },
+      { "name": "For Rent", "icon": "🏠", "subcategories": [
+          { "name": "Portions & Floors", "icon": "🏢" },
+          { "name": "Houses", "icon": "🏠" },
+          { "name": "Apartments & Flats", "icon": "🏢" },
+          { "name": "Shops - Offices - Commercial Space", "icon": "🏬" },
+          { "name": "Rooms", "icon": "🛏️" },
+          { "name": "Roommates & Paying Guests", "icon": "👫" },
+          { "name": "Vacation Rentals - Guest Houses", "icon": "🏖️" },
+          { "name": "Land & Plots", "icon": "🌍" }
+        ]
+      }
+    ]
+  },
+  { "name": "Mobiles", "icon": "📱", "subcategories": [
+    { "name": "Mobile", "icon": "📱"}, 
+      { "name": "Accessories", "icon": "🔧", "subcategories": [
+          { "name": "Earphones", "icon": "🎧" },
+          { "name": "Other Accessories", "icon": "🛠️" },
+          { "name": "Chargers", "icon": "🔋" },
+          { "name": "Headphones", "icon": "🎧" },
+          { "name": "Covers & Cases", "icon": "📱" },
+          { "name": "Power Banks", "icon": "🔋" },
+          { "name": "Screens", "icon": "📺" },
+          { "name": "Mobile Stands", "icon": "🗂️" },
+          { "name": "Charging Cables", "icon": "🔌" },
+          { "name": "Ring Lights", "icon": "💡" },
+          { "name": "Selfie Sticks", "icon": "🤳" },
+          { "name": "Converters", "icon": "🔄" },
+          { "name": "External Memory", "icon": "💾" },
+          { "name": "Screen Protectors", "icon": "🛡️" }
+        ]
+      }
+    ]
+  },
+  { "name": "Electronics", "icon": "💻", "subcategories": [
+      { "name": "Computers & Accessories", "icon": "💻" },
+      { "name": "Televisions & Accessories", "icon": "📺" },
+      { "name": "Generators, UPS & Power Solutions", "icon": "🔋" },
+      { "name": "AC & Coolers", "icon": "❄️" },
+      { "name": "Refrigerators & Freezers", "icon": "🧊" },
+      { "name": "Cameras & Accessories", "icon": "📸" },
+      { "name": "Other Home Appliances", "icon": "🏠" },
+      { "name": "Games & Entertainment", "icon": "🎮" },
+      { "name": "Kitchen Appliances", "icon": "🍳" },
+      { "name": "Video-Audios", "icon": "🎥" },
+      { "name": "Fans", "icon": "🌬️" },
+      { "name": "Washing Machines & Dryers", "icon": "🧺" },
+      { "name": "Microwaves & Ovens", "icon": "🔥" },
+      { "name": "Sewing Machines", "icon": "🪡" },
+      { "name": "Heaters & Geysers", "icon": "🔥" },
+      { "name": "Water Dispensers", "icon": "💧" },
+      { "name": "Irons & Steamers", "icon": "🧺" },
+      { "name": "Air Purifiers & Humidifiers", "icon": "💨" }
+    ]
+  },
+  { "name": "Home Appliances", "icon": "🏠", "subcategories": [
+      { "name": "Generators, UPS & Power Solutions", "icon": "🔋" },
+      { "name": "AC & Coolers", "icon": "❄️" },
+      { "name": "Refrigerators & Freezers", "icon": "🧊" },
+      { "name": "Cameras & Accessories", "icon": "📸" },
+      { "name": "Games & Entertainment", "icon": "🎮" },
+      { "name": "Kitchen Appliances", "icon": "🍳" },
+      { "name": "Video-Audios", "icon": "🎥" },
+      { "name": "Fans", "icon": "🌬️" },
+      { "name": "Washing Machines & Dryers", "icon": "🧺" },
+      { "name": "Microwaves & Ovens", "icon": "🔥" },
+      { "name": "Sewing Machines", "icon": "🪡" },
+      { "name": "Heaters & Geysers", "icon": "🔥" },
+      { "name": "Water Dispensers", "icon": "💧" },
+      { "name": "Irons & Steamers", "icon": "🧺" },
+      { "name": "Air Purifiers & Humidifiers", "icon": "💨" }
+    ]
+  },
+  { "name": "Services", "icon": "🔧", "subcategories": [
+      { "name": "Other Services", "icon": "🔍" },
+      { "name": "Tuitions & Academies", "icon": "📚" },
+      { "name": "Home & Office Repair", "icon": "🛠️" },
+      { "name": "Domestic Help", "icon": "👨‍🔧" },
+      { "name": "Car Rental", "icon": "🚗" },
+      { "name": "Web Development", "icon": "💻" },
+      { "name": "Travel & Visa", "icon": "🌍" },
+      { "name": "Drivers & Taxi", "icon": "🚖" },
+      { "name": "Electronics & Computer Repair", "icon": "🔧" },
+      { "name": "Consultancy Services", "icon": "📊" },
+      { "name": "Health & Beauty", "icon": "💅" },
+      { "name": "Event Services", "icon": "🎉" },
+      { "name": "Construction Services", "icon": "🏗️" },
+      { "name": "Movers & Packers", "icon": "🚚" },
+      { "name": "Video & Photography", "icon": "📸" },
+      { "name": "Farm & Fresh Food", "icon": "🌾" },
+      { "name": "Architecture & Interior Design", "icon": "🏛️" },
+      { "name": "Car Services", "icon": "🚗" },
+      { "name": "Renting Services", "icon": "📦" },
+      { "name": "Camera Installation", "icon": "📷" },
+      { "name": "Catering & Restaurant", "icon": "🍽️" },
+      { "name": "Tailor Services", "icon": "👗" },
+      { "name": "Insurance Services", "icon": "🛡️" }
+    ]
+  },
+  { "name": "Jobs", "icon": "💼", "subcategories": [
+      { "name": "Other Jobs", "icon": "🔍" },
+      { "name": "Online", "icon": "🌐" },
+      { "name": "Part Time", "icon": "⏳" },
+      { "name": "Education", "icon": "🎓" },
+      { "name": "Sales", "icon": "💰" },
+      { "name": "Marketing", "icon": "📈" },
+      { "name": "Customer Service", "icon": "📞" },
+      { "name": "Domestic Staff", "icon": "🛋️" },
+      { "name": "Restaurants & Hospitality", "icon": "🍽️" },
+      { "name": "Content Writing", "icon": "📝" },
+      { "name": "Medical", "icon": "💉" },
+      { "name": "Graphic Design", "icon": "🎨" },
+      { "name": "Accounting & Finance", "icon": "💵" },
+      { "name": "IT & Networking", "icon": "💻" },
+      { "name": "Delivery Riders", "icon": "🛵" },
+      { "name": "Hotels & Tourism", "icon": "🏨" },
+      { "name": "Clerical & Administration", "icon": "📋" },
+      { "name": "Human Resources", "icon": "👥" },
+      { "name": "Manufacturing", "icon": "🏭" },
+      { "name": "Security", "icon": "🛡️" },
+      { "name": "Engineering", "icon": "🔧" },
+      { "name": "Real Estate", "icon": "🏢" },
+      { "name": "Advertising & PR", "icon": "📢" },
+      { "name": "Internships", "icon": "📚" },
+      { "name": "Architecture & Interior Design", "icon": "🏛️" }
+    ]
+  },
+  { "name": "Animals", "icon": "🐾", "subcategories": [
+      { "name": "Hens", "icon": "🐔" },
+      { "name": "Parrots", "icon": "🦜" },
+      { "name": "Cats", "icon": "😺" },
+      { "name": "Pet Food & Accessories", "icon": "🍖" },
+      { "name": "Dogs", "icon": "🐶" },
+      { "name": "Pigeons", "icon": "🕊️" },
+      { "name": "Livestock", "icon": "🐄" },
+      { "name": "Finches", "icon": "🐦" },
+      { "name": "Fish", "icon": "🐟" },
+      { "name": "Rabbits", "icon": "🐰" },
+      { "name": "Other Birds", "icon": "🐦" },
+      { "name": "Doves", "icon": "🕊️" },
+      { "name": "Ducks", "icon": "🦆" },
+      { "name": "Fertile Eggs", "icon": "🥚" },
+      { "name": "Peacocks", "icon": "🦚" },
+      { "name": "Other Animals", "icon": "🐾" },
+      { "name": "Horses", "icon": "🐎" }
+    ]
+  },
+  { "name": "Furniture", "icon": "🛏️", "subcategories": [
+      { "name": "Beds & Wardrobes", "icon": "🛏️" },
+      { "name": "Sofa & Chairs", "icon": "🪑" },
+      { "name": "Other Household Items", "icon": "🛋️" },
+      { "name": "Tables & Dining", "icon": "🍽️" },
+      { "name": "Home Decoration", "icon": "🖼️" },
+      { "name": "Office Furniture", "icon": "🪑" },
+      { "name": "Garden & Outdoor", "icon": "🌳" },
+      { "name": "Painting & Mirrors", "icon": "🖼️" },
+      { "name": "Curtains & Blinds", "icon": "🪟" },
+      { "name": "Rugs & Carpets", "icon": "🧼" },
+      { "name": "Bathroom Accessories", "icon": "🚿" }
+    ]
+  },
   { "name": "Fashion & Beauty", "icon": "👗" },
-  { "name": "Books", "icon": "📚" },
-  { "name": "Sports", "icon": "⚽" },
-  { "name": "Others", "icon ": "➕" }
+  { "name": "Books", "icon": "📚", "subcategories": [
+      { "name": "Books & Magazines", "icon": "📖" },
+      { "name": "Other Hobbies", "icon": "🎨" },
+      { "name": "Musical Instruments", "icon": "🎸" }
+    ]
+  },
+  { "name": "Sports", "icon": "⚽", "subcategories": [
+      { "name": "Gym & Fitness", "icon": "🏋️" },
+      { "name": "Sports Equipment", "icon": "🏀" }
+    ]
+  },
+  { "name": "Kids", "icon": "🧸", "subcategories": [
+      { "name": "Toys", "icon": "🧸" },
+      { "name": "Kids Vehicles", "icon": "🚲" },
+      { "name": "Baby Gear", "icon": "👶" },
+      { "name": "Kids Furniture", "icon": "🛏️" },
+      { "name": "Kids Clothing", "icon": "👕" },
+      { "name": "Kids Accessories", "icon": "🎀" },
+      { "name": "Swings & Slides", "icon": "🏰" },
+      { "name": "Bath & Diapers", "icon": "🛁" }
+    ]
+  },
+  { "name": "Others", "icon": "➕" , "subcategories" : [
+    {"name": "Others Items", "icon": "➕"}
+  ]
+
+}
 ]
