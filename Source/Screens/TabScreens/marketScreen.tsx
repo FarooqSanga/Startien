@@ -52,10 +52,10 @@ const MarketListScreen: React.FC = () => {
     return <ActivityIndicator size="large" color="#6200ee" />;
   }
 
-  const renderShopItem = ({ item }: { item: ShopData }) => (
+  const renderShopItem = ({ item, shopOwnerId }: { item: ShopData, shopOwnerId: string }) => (
     <TouchableOpacity 
       style={styles.shopItem}
-      onPress={() => navigation.navigate('ShopDetailScreen', { shop: item })}  // Navigate to ShopDetailScreen with shop data
+      onPress={() => navigation.navigate('ShopDetailScreen', { shop: item, shopOwnerId })} // Pass shopOwnerId to ShopDetailScreen
     >
       <View style={styles.profilePicture}>
         {item.profilePicture ? (
@@ -71,6 +71,9 @@ const MarketListScreen: React.FC = () => {
       </View>
     </TouchableOpacity>
   );
+  
+  // When fetching shops, also save the shopOwnerId and pass it to renderShopItem
+  
 
   return (
     <SafeAreaView style={styles.container}>

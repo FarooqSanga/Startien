@@ -3,9 +3,21 @@ import { View, Text, TextInput, ActivityIndicator, ScrollView, StyleSheet } from
 import { useRoute } from '@react-navigation/native';
 import database from '@react-native-firebase/database';
 import auth from '@react-native-firebase/auth';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
+interface UserProfile {
+  contact: string;
+  country: string;
+  designation: string;
+  dob: string;
+  email: string;
+  firstName: string;
+  gender: string;
+  lastName: string;
+}
 
 const ProfileScreen: React.FC = () => {
-  const [userData, setUserData] = useState<any>(null); // State for user data
+  const [userData, setUserData] = useState<UserProfile | null>(null); // State for user data
   const [loading, setLoading] = useState<boolean>(true); // Loading state
   const route = useRoute();
 
@@ -17,13 +29,27 @@ const ProfileScreen: React.FC = () => {
       return;
     }
 
-    // Reference to the user's data in Firebase
-    const userRef = database().ref(`users/${uid}`);
+    // Reference to the specific user fields in Firebase
+    const userRef = database().ref(`users/${uid}`).child('/');
 
-    // Fetch user data from Firebase
+    // Fetch specific user data from Firebase
     userRef.once('value')
       .then(snapshot => {
-        setUserData(snapshot.val());
+        const userData = snapshot.val();
+        if (userData) {
+          // Only pick the required fields
+          const filteredData: UserProfile = {
+            contact: userData.contact || '',
+            country: userData.country || '',
+            designation: userData.designation || '',
+            dob: userData.dob || '',
+            email: userData.email || '',
+            firstName: userData.firstName || '',
+            gender: userData.gender || '',
+            lastName: userData.lastName || ''
+          };
+          setUserData(filteredData);
+        }
         setLoading(false); // Stop loading once data is fetched
       })
       .catch(error => {
@@ -37,9 +63,11 @@ const ProfileScreen: React.FC = () => {
   // Display loading indicator while fetching data
   if (loading) {
     return (
+      <SafeAreaView>
       <View style={styles.loadingContainer}>
         <ActivityIndicator size="large" color="#6200EE" />
       </View>
+      </SafeAreaView>
     );
   }
 
@@ -55,22 +83,41 @@ const ProfileScreen: React.FC = () => {
   // Render user profile information
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      {Object.entries(userData).map(([key, value]) => (
-        <View key={key}>
-          <Text style={styles.label}>{capitalizeFirstLetter(key)}:</Text>
-          <TextInput
-            style={styles.input}
-            value={String(value)} // Convert value to string to avoid issues with non-string data
-            editable={false} // Make inputs non-editable
-          />
-        </View>
-      ))}
+      <View>
+        <Text style={styles.label}>First Name:</Text>
+        <TextInput style={styles.input} value={userData.firstName} editable={false} />
+      </View>
+      <View>
+        <Text style={styles.label}>Last Name:</Text>
+        <TextInput style={styles.input} value={userData.lastName} editable={false} />
+      </View>
+      <View>
+        <Text style={styles.label}>Contact:</Text>
+        <TextInput style={styles.input} value={userData.contact} editable={false} />
+      </View>
+      <View>
+        <Text style={styles.label}>Email:</Text>
+        <TextInput style={styles.input} value={userData.email} editable={false} />
+      </View>
+      <View>
+        <Text style={styles.label}>Date of Birth:</Text>
+        <TextInput style={styles.input} value={userData.dob} editable={false} />
+      </View>
+      <View>
+        <Text style={styles.label}>Gender:</Text>
+        <TextInput style={styles.input} value={userData.gender} editable={false} />
+      </View>
+      <View>
+        <Text style={styles.label}>Designation:</Text>
+        <TextInput style={styles.input} value={userData.designation} editable={false} />
+      </View>
+      <View>
+        <Text style={styles.label}>Country:</Text>
+        <TextInput style={styles.input} value={userData.country} editable={false} />
+      </View>
     </ScrollView>
   );
 };
-
-// Function to capitalize the first letter of a string
-const capitalizeFirstLetter = (string: string) => string.charAt(0).toUpperCase() + string.slice(1);
 
 const styles = StyleSheet.create({
   container: {

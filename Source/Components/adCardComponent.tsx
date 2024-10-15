@@ -14,6 +14,7 @@ interface AdCardProps {
     features?: string[];
     location: string;
     postedDate: string;
+    city: string;
   };
 }
 
@@ -97,7 +98,7 @@ const AdCard: React.FC<AdCardProps> = ({ ad }) => {
         </View>
         <View style={styles.adLocationContainer}>
           <Icon name="map-marker" size={16} color="#777" style={styles.locationIcon} />
-          <Text style={styles.adLocation}>{ad.location}</Text>
+          <Text style={styles.adLocation}>{ad.location}, {ad.city}</Text>
         </View>
         <Text style={styles.adPostedDate}>{ad.postedDate}</Text>
       </View>
