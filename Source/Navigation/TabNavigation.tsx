@@ -39,7 +39,7 @@ const TabNavigation:FunctionComponent<Props> = ({}) => {
 
           if (route.name === 'Home') {
             iconName = 'home';
-            return <FontAwesome name={iconName} size={size} color={color} />;
+            return <Ionicons name={iconName} size={size} color={color} />;
           } else if (route.name === 'Chats') {
             iconName = 'chat';
             return <MaterialIcons name={iconName} size={size} color={color} />;
