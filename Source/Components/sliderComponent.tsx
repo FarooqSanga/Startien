@@ -3,20 +3,18 @@ import { View, StyleSheet, FlatList, Image, Dimensions } from 'react-native';
 
 const { width } = Dimensions.get('window');
 
-// Array of image URLs for the slider
+// Array of local image assets for the slider
 const images = [
-  'https://via.placeholder.com/600x400?text=Image+1',
-  'https://via.placeholder.com/600x400?text=Image+2',
-  'https://via.placeholder.com/600x400?text=Image+3',
-  'https://via.placeholder.com/600x400?text=Image+4',
-  'https://via.placeholder.com/600x400?text=Image+5',
+  require('./../Assets/imgSlider/content-writer.png'),
+  require('./../Assets/imgSlider/marketing-specialists.png'), // Replace with actual image paths
+  require('./../Assets/imgSlider/social-media-manager.png'), // Replace with actual image paths
 ];
 
 const Slider: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const flatListRef = useRef<FlatList>(null);
 
-  // Automatically change slides every 1 second
+  // Automatically change slides every 2.5 seconds
   useEffect(() => {
     const intervalId = setInterval(() => {
       setCurrentIndex((prevIndex) => {
@@ -46,7 +44,7 @@ const Slider: React.FC = () => {
         showsHorizontalScrollIndicator={false}
         renderItem={({ item }) => (
           <View style={styles.slide}>
-            <Image source={{ uri: item }} style={styles.image} />
+            <Image source={item} style={styles.image} />
           </View>
         )}
         onViewableItemsChanged={onViewableItemsChanged}

@@ -1,7 +1,6 @@
-// MarketListScreen.tsx
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, FlatList, ActivityIndicator, TouchableOpacity, Image, StatusBar } from 'react-native';
-import { useNavigation } from '@react-navigation/native';  // Import useNavigation
+import { useNavigation } from '@react-navigation/native';
 import database from '@react-native-firebase/database';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -16,23 +15,23 @@ interface ShopData {
 }
 
 const MarketListScreen: React.FC = () => {
-  const [shops, setShops] = useState<ShopData[]>([]);
+  const [shops, setShops] = useState<{ shop: ShopData; shopOwnerId: string }[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const navigation = useNavigation();  // Use the navigation hook
+  const navigation = useNavigation();
 
   useEffect(() => {
     const fetchShops = async () => {
       try {
         const usersRef = database().ref('users');
         const snapshot = await usersRef.once('value');
-        const allShops: ShopData[] = [];
+        const allShops: Array<{ shop: ShopData; shopOwnerId: string }> = [];
 
         if (snapshot.exists()) {
           const usersData = snapshot.val();
           Object.keys(usersData).forEach((userId) => {
             const shopDetails = usersData[userId].shopDetails;
             if (shopDetails) {
-              allShops.push(shopDetails);
+              allShops.push({ shop: shopDetails, shopOwnerId: userId });
             }
           });
         }
@@ -48,43 +47,40 @@ const MarketListScreen: React.FC = () => {
     fetchShops();
   }, []);
 
-  if (loading) {
-    return <ActivityIndicator size="large" color="#6200ee" />;
-  }
-
-  const renderShopItem = ({ item, shopOwnerId }: { item: ShopData, shopOwnerId: string }) => (
-    <TouchableOpacity 
+  const renderShopItem = ({ item }: { item: { shop: ShopData; shopOwnerId: string } }) => (
+    <TouchableOpacity
       style={styles.shopItem}
-      onPress={() => navigation.navigate('ShopDetailScreen', { shop: item, shopOwnerId })} // Pass shopOwnerId to ShopDetailScreen
+      onPress={() => navigation.navigate('ShopDetailScreen', { shop: item.shop, shopOwnerId: item.shopOwnerId })}
     >
       <View style={styles.profilePicture}>
-        {item.profilePicture ? (
-          <Image source={{ uri: item.profilePicture }} style={styles.profileImage} />
+        {item.shop.profilePicture ? (
+          <Image source={{ uri: item.shop.profilePicture }} style={styles.profileImage} />
         ) : (
           <Text style={styles.profileText}>No Image</Text>
         )}
       </View>
       <View style={styles.shopDetails}>
-        <Text style={styles.shopName}>{item.shopName || "Unnamed Shop"}</Text>
-        <Text style={styles.shopType}>{item.shopType || "Shop Type"}</Text>
-        <Text style={styles.bio}>{item.bio || "No bio available"}</Text>
+        <Text style={styles.shopName}>{item.shop.shopName || 'Unnamed Shop'}</Text>
+        <Text style={styles.shopType}>{item.shop.shopType || 'Shop Type'}</Text>
+        <Text style={styles.bio}>{item.shop.bio || 'No bio available'}</Text>
       </View>
     </TouchableOpacity>
   );
-  
-  // When fetching shops, also save the shopOwnerId and pass it to renderShopItem
-  
 
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor="#6200ee" barStyle="light-content" />
-      <FlatList
-        data={shops}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={renderShopItem}
-        contentContainerStyle={styles.listContainer}
-        ListEmptyComponent={<Text style={styles.emptyText}>No shops available</Text>}
-      />
+      {loading ? (
+        <ActivityIndicator size="large" color="#6200ee" />
+      ) : (
+        <FlatList
+          data={shops}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={renderShopItem}
+          contentContainerStyle={styles.listContainer}
+          ListEmptyComponent={<Text style={styles.emptyText}>No shops available</Text>}
+        />
+      )}
     </SafeAreaView>
   );
 };

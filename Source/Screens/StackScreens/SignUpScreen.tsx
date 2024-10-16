@@ -1,7 +1,4 @@
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import auth from '@react-native-firebase/auth';
-import 'react-native-gesture-handler';
-import { FunctionComponent, useState, useEffect } from "react";
+import React, { FunctionComponent, useState, useEffect } from "react";
 import {
   TouchableOpacity,
   Text,
@@ -12,22 +9,22 @@ import {
   StyleSheet,
   Alert,
 } from 'react-native';
+import auth from '@react-native-firebase/auth';
+import { useNavigation } from '@react-navigation/native';
 
 type Props = {
   navigation: any;
 }
 
-const SignUpScreen: FunctionComponent<Props> = (props, { navigation }) => {
+const SignUpScreen: FunctionComponent<Props> = () => {
+  const navigation = useNavigation();
+  
   useEffect(() => {
     StatusBar.setBackgroundColor('#20129D'); // Change status bar color
     return () => {
       StatusBar.setBackgroundColor('#20129D'); // Reset status bar color when unmounting
     };
   }, []);
-
-  const navigateToLoginScreen = () => {
-    props.navigation.replace("LoginScreen");
-  }
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -40,22 +37,18 @@ const SignUpScreen: FunctionComponent<Props> = (props, { navigation }) => {
       .createUserWithEmailAndPassword(email, password)
       .then(() => {
         console.log('User account created & signed in!');
-        // const user = userCredential.user;
-        // const token = await user.getIdToken();
-        props.navigation.replace("CompleteProfileScreen");
+        navigation.replace("CompleteProfileScreen");
       })
       .catch(error => {
         if (error.code === 'auth/email-already-in-use') {
-          console.log('That email address is already in use!');
           Alert.alert('That email address is already in use!');
-
         } else if (error.code === 'auth/invalid-email') {
-          console.log('That email address is invalid!');
+          Alert.alert('That email address is invalid!');
         } else {
-          console.error(error);
+          Alert.alert('Something went wrong. Please try again.');
         }
       });
-  }
+  };
 
   return (
     <View style={styles.container}>
@@ -84,20 +77,35 @@ const SignUpScreen: FunctionComponent<Props> = (props, { navigation }) => {
           onChangeText={handlePassText}
           value={password}
         />
-        <View style = {styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={() => SignUp(email, password)}>
-          <Text style={styles.buttonText}>Sign Up Now</Text>
-        </TouchableOpacity>
-        <Text style={styles.loginText}>Already have an Account?</Text>
-        <TouchableOpacity style={[styles.button, styles.secondaryButton]} onPress={navigateToLoginScreen}>
-          <Text style={styles.buttonText}>Login Now</Text>
-        </TouchableOpacity>
+
+        {/* Privacy Policy and Terms and Conditions */}
+        <View style={styles.policyContainer}>
+          <Text style={styles.policyText}>By signing up, you agree to Startien's </Text>
+          <TouchableOpacity onPress={() => navigation.navigate('PrivacyScreen')}>
+            <Text style={styles.linkText}>Privacy</Text>
+          </TouchableOpacity>
+          <Text style={styles.policyText}> and </Text>
+          <TouchableOpacity onPress={() => navigation.navigate('TermsAndConditionsScreen')}>
+            <Text style={styles.linkText}>Terms and Conditions</Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.button} onPress={() => SignUp(email, password)}>
+            <Text style={styles.buttonText}>Sign Up Now</Text>
+          </TouchableOpacity>
+          <Text style={styles.loginText}>Already have an Account?</Text>
+          <TouchableOpacity
+            style={[styles.button, styles.secondaryButton]}
+            onPress={() => navigation.replace('LoginScreen')}
+          >
+            <Text style={styles.buttonText}>Login Now</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </View>
   )
 }
-
 
 const styles = StyleSheet.create({
   container: {
@@ -126,7 +134,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     padding: 20,
     borderRadius: 20,
-    paddingVertical:30,
+    paddingVertical: 30,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
@@ -139,6 +147,22 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     paddingHorizontal: 15,
     marginBottom: 15,
+  },
+  policyContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    marginBottom: 15,
+    justifyContent: 'center',
+  },
+  policyText: {
+    fontSize: 12,
+    color: '#333',
+  },
+  linkText: {
+    fontSize: 12,
+    color: '#6200ea',
+    fontWeight: 'bold',
   },
   button: {
     backgroundColor: '#6200ea',
@@ -156,23 +180,16 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 16,
   },
-  secondaryText: {
+  loginText: {
     alignSelf: 'center',
     fontWeight: 'bold',
     marginBottom: 10,
     fontSize: 14,
     color: '#20129D',
   },
-  loginText: {
-        alignSelf: 'center',
-        fontWeight: 'bold',
-        marginBottom: 10,
-        fontSize: 14,
-        color: '#20129D',
-      },
   buttonContainer: {
-    marginTop:10,
-    paddingHorizontal:20
+    marginTop: 10,
+    paddingHorizontal: 20
   }
 });
 

@@ -1,8 +1,19 @@
-// ShopDetailScreen.tsx
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, ActivityIndicator, Alert, ScrollView } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  ActivityIndicator,
+  Alert,
+  ScrollView,
+  Image,
+} from 'react-native';
 import database from '@react-native-firebase/database';
 import auth from '@react-native-firebase/auth';
+import storage from '@react-native-firebase/storage';
+import { launchImageLibrary } from 'react-native-image-picker';
 
 interface ShopData {
   shopName: string;
@@ -14,7 +25,7 @@ interface ShopData {
   website?: string;
   openingHours?: string;
   contactPerson?: string;
-  profilePicture?: string; // For now, we're using a placeholder <View> for the picture
+  profilePicture?: string; // For profile picture URL
 }
 
 const MyShopDetailScreen: React.FC = () => {
@@ -28,26 +39,30 @@ const MyShopDetailScreen: React.FC = () => {
     website: '',
     openingHours: '',
     contactPerson: '',
+    profilePicture: '',
   });
   const [loading, setLoading] = useState<boolean>(true);
   const [editing, setEditing] = useState<boolean>(false);
+  const [uploading, setUploading] = useState<boolean>(false);
 
   const user = auth().currentUser;
 
   useEffect(() => {
-    // Fetch shop details from Firebase Realtime Database when the component mounts
     if (user) {
       const shopRef = database().ref(`/users/${user.uid}/shopDetails`);
-      shopRef.once('value').then((snapshot) => {
-        const data = snapshot.val();
-        if (data) {
-          setShopData(data);
-        }
-        setLoading(false);
-      }).catch((error) => {
-        console.error("Error fetching shop details: ", error);
-        setLoading(false);
-      });
+      shopRef
+        .once('value')
+        .then((snapshot) => {
+          const data = snapshot.val();
+          if (data) {
+            setShopData(data);
+          }
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.error('Error fetching shop details: ', error);
+          setLoading(false);
+        });
     }
   }, [user]);
 
@@ -55,15 +70,49 @@ const MyShopDetailScreen: React.FC = () => {
     if (!user) return;
 
     const shopRef = database().ref(`/users/${user.uid}/shopDetails`);
-    shopRef.set(shopData)
+    shopRef
+      .set(shopData)
       .then(() => {
-        Alert.alert("Shop details saved successfully!");
+        Alert.alert('Shop details saved successfully!');
         setEditing(false);
       })
       .catch((error) => {
-        console.error("Error saving shop details: ", error);
-        Alert.alert("Failed to save shop details.");
+        console.error('Error saving shop details: ', error);
+        Alert.alert('Failed to save shop details.');
       });
+  };
+
+  const handleImagePick = async () => {
+    const result = await launchImageLibrary({
+      mediaType: 'photo',
+      quality: 0.8,
+    });
+
+    if (result.assets && result.assets.length > 0) {
+      const image = result.assets[0];
+      uploadImage(image.uri);
+    }
+  };
+
+  const uploadImage = async (uri: string) => {
+    if (!user) return;
+
+    const uploadUri = uri;
+    const filename = uploadUri.substring(uploadUri.lastIndexOf('/') + 1);
+    const storageRef = storage().ref(`shopProfileImages/${user.uid}/${filename}`);
+
+    setUploading(true);
+
+    try {
+      await storageRef.putFile(uploadUri);
+      const downloadURL = await storageRef.getDownloadURL();
+      setShopData({ ...shopData, profilePicture: downloadURL });
+      setUploading(false);
+      Alert.alert('Image uploaded successfully!');
+    } catch (error) {
+      console.error('Error uploading image: ', error);
+      setUploading(false);
+    }
   };
 
   if (loading) {
@@ -74,10 +123,18 @@ const MyShopDetailScreen: React.FC = () => {
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.title}>Shop Details</Text>
 
-      {/* Profile Picture Placeholder */}
-      <View style={styles.profilePicture}>
-        <Text>Profile Picture</Text>
-      </View>
+      {/* Profile Picture */}
+      <TouchableOpacity onPress={handleImagePick}>
+        {shopData.profilePicture ? (
+          <Image source={{ uri: shopData.profilePicture }} style={styles.profilePicture} />
+        ) : (
+          <View style={styles.profilePicturePlaceholder}>
+            <Text style={styles.uploadText}>Upload Profile Picture</Text>
+          </View>
+        )}
+      </TouchableOpacity>
+
+      {uploading && <ActivityIndicator size="small" color="#6200ea" />}
 
       {editing ? (
         <>
@@ -141,15 +198,15 @@ const MyShopDetailScreen: React.FC = () => {
         </>
       ) : (
         <>
-          <Text style={styles.text}>Shop Name: {shopData.shopName || "N/A"}</Text>
-          <Text style={styles.text}>Bio: {shopData.bio || "No bio available"}</Text>
+          <Text style={styles.text}>Shop Name: {shopData.shopName || 'N/A'}</Text>
+          <Text style={styles.text}>Bio: {shopData.bio || 'No bio available'}</Text>
           <Text style={styles.text}>Address: {shopData.address}</Text>
           <Text style={styles.text}>Shop Type: {shopData.shopType}</Text>
-          <Text style={styles.text}>Phone Number: {shopData.phoneNumber || "N/A"}</Text>
-          <Text style={styles.text}>Email: {shopData.email || "N/A"}</Text>
-          <Text style={styles.text}>Website: {shopData.website || "N/A"}</Text>
-          <Text style={styles.text}>Opening Hours: {shopData.openingHours || "N/A"}</Text>
-          <Text style={styles.text}>Contact Person: {shopData.contactPerson || "N/A"}</Text>
+          <Text style={styles.text}>Phone Number: {shopData.phoneNumber || 'N/A'}</Text>
+          <Text style={styles.text}>Email: {shopData.email || 'N/A'}</Text>
+          <Text style={styles.text}>Website: {shopData.website || 'N/A'}</Text>
+          <Text style={styles.text}>Opening Hours: {shopData.openingHours || 'N/A'}</Text>
+          <Text style={styles.text}>Contact Person: {shopData.contactPerson || 'N/A'}</Text>
           <TouchableOpacity style={styles.button} onPress={() => setEditing(true)}>
             <Text style={styles.buttonText}>Edit Shop Details</Text>
           </TouchableOpacity>
@@ -163,50 +220,71 @@ const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     padding: 16,
-    backgroundColor: '#f0f0f5',
+    backgroundColor: '#f9f9f9',
   },
   title: {
-    fontSize: 24,
+    fontSize: 26,
     fontWeight: 'bold',
     marginBottom: 16,
-    color: '#333',
+    color: '#1e1e1e',
     textAlign: 'center',
+    letterSpacing: 1,
   },
   profilePicture: {
-    width: 100,
-    height: 100,
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+    alignSelf: 'center',
+    marginBottom: 20,
+    borderColor: '#6200ea',
+    borderWidth: 2,
+  },
+  profilePicturePlaceholder: {
+    width: 120,
+    height: 120,
     backgroundColor: '#ddd',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 16,
-    borderRadius: 50,
+    borderRadius: 60,
     alignSelf: 'center',
-  },
-  input: {
-    height: 40,
+    marginBottom: 20,
     borderColor: '#ccc',
     borderWidth: 1,
+  },
+  uploadText: {
+    color: '#555',
+    fontSize: 14,
+    textAlign: 'center',
+  },
+  input: {
+    height: 48,
+    borderColor: '#ddd',
+    borderWidth: 1,
     marginBottom: 12,
-    paddingHorizontal: 8,
-    borderRadius: 8,
+    paddingHorizontal: 12,
+    borderRadius: 10,
     backgroundColor: '#fff',
+    fontSize: 16,
+    color: '#333',
   },
   text: {
-    fontSize: 18,
-    marginBottom: 12,
+    fontSize: 16,
+    marginBottom: 10,
     color: '#333',
+    lineHeight: 22,
   },
   button: {
     backgroundColor: '#6200ea',
     padding: 15,
     borderRadius: 8,
     alignItems: 'center',
-    marginVertical: 10,
+    marginTop: 20,
   },
   buttonText: {
     color: '#fff',
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: '600',
+    letterSpacing: 0.5,
   },
 });
 
