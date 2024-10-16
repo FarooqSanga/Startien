@@ -20,6 +20,9 @@ import SavedAdsScreen from '../Screens/StackScreens/savedAdsScreen';
 import MyShopDetailScreen from '../Screens/StackScreens/myShopScreen';
 import MarketListScreen from '../Screens/TabScreens/marketScreen';
 import ShopDetailScreen from '../Screens/StackScreens/shopDetailsScreen';
+import PrivacyScreen from '../Screens/StackScreens/PrivacyScreen';
+import TermsAndConditionsScreen from '../Screens/StackScreens/TermsAndConditionsScreen';
+// import { PrivacyScreen, TermsAndConditionsScreen } from '../Screens/StackScreens/PrivacyScreen';
 // import ViewEditProfileScreen from '../Screens/StackScreens/ViewEditProfileScreen';
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -45,6 +48,9 @@ const MyStack: React.FC = () => {
         <Stack.Screen name="MyShopDetailScreen" component={MyShopDetailScreen} options={{headerShown:false}}/>
         <Stack.Screen name="MarketListScreen" component={MarketListScreen} options={{headerShown:false}}/>
         <Stack.Screen name="ShopDetailScreen" component={ShopDetailScreen} options={{headerShown:false}}/>
+        <Stack.Screen name="PrivacyScreen" component={PrivacyScreen} options={{headerShown:false}}/>
+        <Stack.Screen name="TermsAndConditionsScreen" component={TermsAndConditionsScreen} options={{headerShown:false}}/>
+
 
         
         

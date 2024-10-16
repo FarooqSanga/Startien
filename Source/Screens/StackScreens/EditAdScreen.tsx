@@ -48,9 +48,7 @@ type Props = {
 };
 
 const EditAdScreen: React.FC<Props> = ({ route, navigation }) => {
-  const { ad } = route.params;
-
-  // Load existing ad data
+  const { ad }:any = route.params;
   const [title, setTitle] = useState(ad.title || '');
   const [description, setDescription] = useState(ad.description || '');
   const [price, setPrice] = useState(ad.price || '');
@@ -136,30 +134,32 @@ const EditAdScreen: React.FC<Props> = ({ route, navigation }) => {
       Alert.alert('Validation Error', 'Please fill all required fields');
       return;
     }
-
+  
     setLoading(true); // Show loading indicator
-
+  
     try {
       let imageUrls: string[] = [];
-
-      // Compress and upload featured image
+  
+      // Compress and upload featured image if it's a new one
       if (featuredImage && !ad.featuredImage) {
         const compressedImageUrl = await compressAndUploadImage(featuredImage);
         imageUrls.push(compressedImageUrl);
       } else {
         imageUrls.push(ad.featuredImage); // Keep existing featured image
       }
-
+  
       // Compress and upload additional images
       for (const img of additionalImages) {
         const compressedImageUrl = await compressAndUploadImage(img);
         imageUrls.push(compressedImageUrl);
       }
-
+  
       const now = new Date().toISOString();
       const adPublisherID = firebase.auth().currentUser?.uid; // Get the current user's UID
-
+  
+      // Ensure you're using the existing ad.id for update
       const updatedAdData = {
+        ...ad,  // Spread existing ad to ensure we don't miss any fields
         title,
         description,
         price,
@@ -168,27 +168,27 @@ const EditAdScreen: React.FC<Props> = ({ route, navigation }) => {
         location,
         city: selectedCity,
         contactInfo,
-        featuredImage: imageUrls[0] || null,
+        featuredImage: imageUrls[0] || ad.featuredImage,
         additionalImages: imageUrls.slice(1),
         dynamicFields,
         updatedAt: now,
         adPublisherID,
       };
-
+  
       const userAdRef = database().ref(`users/${adPublisherID}/ads/${ad.id}`);
       const globalAdRef = database().ref(`adsCollection/${ad.id}`);
-
+  
       // Update the ad in both user and global references
       await userAdRef.update(updatedAdData);
       await globalAdRef.update(updatedAdData);
-
+  
       setLoading(false); // Hide loading indicator
-
+  
       Toast.show({
         type: 'success',
         text1: 'Ad Updated Successfully',
       });
-
+  
       navigation.goBack();
     } catch (error: any) {
       console.error('Update error:', error);

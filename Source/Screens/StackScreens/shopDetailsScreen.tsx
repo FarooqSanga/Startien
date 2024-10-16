@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, FlatList, StatusBar, ActivityIndicator, Image } from 'react-native';
+import React, { FunctionComponent, useEffect, useState } from 'react';
+import { View, Text, StyleSheet, ScrollView, FlatList, StatusBar, ActivityIndicator, Image, TouchableOpacity, Linking, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import database from '@react-native-firebase/database';
 import AdCard from '../../Components/adCardComponent'; // Assuming this is the path to your AdCard component
@@ -23,34 +23,60 @@ interface Ad {
   features?: string[];
   location: string;
   postedDate: string;
-  city: string; // Added city field to match AdCardProps
+  city: string;
 }
 
-const ShopDetailScreen = ({ route }: any) => {
+const ShopDetailScreen: FunctionComponent = ({ route }: any) => {
   const { shop, shopOwnerId } = route.params; // shopOwnerId is passed from MarketListScreen
   const [ads, setAds] = useState<Ad[]>([]);
   const [loadingAds, setLoadingAds] = useState(true);
 
   useEffect(() => {
-    // Fetch ads posted by the shop owner in real-time from the correct Firebase path
     const adsRef = database().ref(`users/${shopOwnerId}/ads`);
 
-    const fetchAds = adsRef.on('value', (snapshot) => {
-      if (snapshot.exists()) {
-        const fetchedAds = snapshot.val();
-        const adArray = Object.keys(fetchedAds).map((key) => ({
-          id: key,
-          ...fetchedAds[key], // Assuming ad data includes price, title, city, etc.
-        }));
-        setAds(adArray);
-      } else {
-        setAds([]);
+    const fetchAds = adsRef.on(
+      'value',
+      (snapshot) => {
+        if (snapshot.exists()) {
+          const fetchedAds = snapshot.val();
+          const adArray = Object.keys(fetchedAds).map((key) => ({
+            id: key,
+            ...fetchedAds[key],
+          }));
+          setAds(adArray);
+        } else {
+          setAds([]);
+        }
+        setLoadingAds(false);
+      },
+      (error) => {
+        console.error('Error fetching ads:', error);
+        setLoadingAds(false);
       }
-      setLoadingAds(false);
-    });
+    );
 
     return () => adsRef.off(); // Clean up the Firebase listener
   }, [shopOwnerId]);
+
+  const handleCall = () => {
+    if (shop.phoneNumber) {
+      Linking.openURL(`tel:${shop.phoneNumber}`);
+    } else {
+      Alert.alert('Error', 'No phone number available for this shop.');
+    }
+  };
+
+  const handleMessage = () => {
+    if (shop.phoneNumber) {
+      Linking.openURL(`sms:${shop.phoneNumber}`);
+    } else {
+      Alert.alert('Error', 'No phone number available for this shop.');
+    }
+  };
+
+  const handleFollow = () => {
+    Alert.alert('Followed', `You are now following ${shop.shopName}.`);
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -77,6 +103,21 @@ const ShopDetailScreen = ({ route }: any) => {
           <Text style={styles.contact}>Phone: {shop.phoneNumber || 'N/A'}</Text>
           <Text style={styles.contact}>Email: {shop.email || 'N/A'}</Text>
           <Text style={styles.contact}>Website: {shop.website || 'N/A'}</Text>
+        </View>
+
+        {/* Action Buttons */}
+        <View style={styles.buttonsContainer}>
+          <TouchableOpacity style={styles.button} onPress={handleFollow}>
+            <Text style={styles.buttonText}>Follow</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.button} onPress={handleMessage}>
+            <Text style={styles.buttonText}>Message</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.button} onPress={handleCall}>
+            <Text style={styles.buttonText}>Call</Text>
+          </TouchableOpacity>
         </View>
 
         {/* Display Ads */}
@@ -172,6 +213,24 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#333',
     marginBottom: 4,
+  },
+  buttonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: 16,
+  },
+  button: {
+    backgroundColor: '#007bff',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+    flex: 1,
+    marginHorizontal: 4,
+  },
+  buttonText: {
+    color: '#fff',
+    textAlign: 'center',
+    fontWeight: 'bold',
   },
   adsTitle: {
     fontSize: 18,
