@@ -57,8 +57,8 @@ const HomeScreen: FunctionComponent<Props> = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <CustomStatusBar backgroundColor="#6200ea" barStyle="light-content" />
-      <View>
-        <Text style={{ fontWeight: 'bold', fontSize: 26, color: 'black', paddingHorizontal: 16, paddingVertical: 12 }}>
+      <View style = {{backgroundColor:"#6200ea"}}>
+        <Text style={{ fontWeight: 'bold', fontSize: 26, color: 'white', paddingHorizontal: 16, paddingVertical: 14 }}>
           Startien
         </Text>
       </View>

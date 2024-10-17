@@ -14,6 +14,7 @@ import database from '@react-native-firebase/database';
 import auth from '@react-native-firebase/auth';
 import storage from '@react-native-firebase/storage';
 import { launchImageLibrary } from 'react-native-image-picker';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 interface ShopData {
   shopName: string;
@@ -198,15 +199,43 @@ const MyShopDetailScreen: React.FC = () => {
         </>
       ) : (
         <>
-          <Text style={styles.text}>Shop Name: {shopData.shopName || 'N/A'}</Text>
-          <Text style={styles.text}>Bio: {shopData.bio || 'No bio available'}</Text>
-          <Text style={styles.text}>Address: {shopData.address}</Text>
-          <Text style={styles.text}>Shop Type: {shopData.shopType}</Text>
-          <Text style={styles.text}>Phone Number: {shopData.phoneNumber || 'N/A'}</Text>
-          <Text style={styles.text}>Email: {shopData.email || 'N/A'}</Text>
-          <Text style={styles.text}>Website: {shopData.website || 'N/A'}</Text>
-          <Text style={styles.text}>Opening Hours: {shopData.openingHours || 'N/A'}</Text>
-          <Text style={styles.text}>Contact Person: {shopData.contactPerson || 'N/A'}</Text>
+          {/* Icons with Text */}
+          <View style={styles.detailItem}>
+            <Icon name="storefront-outline" size={20} color="#6200ea" style={styles.icon} />
+            <Text style={styles.text}>Shop Name: {shopData.shopName || 'N/A'}</Text>
+          </View>
+          <View style={styles.detailItem}>
+            <Icon name="information-circle-outline" size={20} color="#6200ea" style={styles.icon} />
+            <Text style={styles.text}>Bio: {shopData.bio || 'No bio available'}</Text>
+          </View>
+          <View style={styles.detailItem}>
+            <Icon name="location-outline" size={20} color="#6200ea" style={styles.icon} />
+            <Text style={styles.text}>Address: {shopData.address}</Text>
+          </View>
+          <View style={styles.detailItem}>
+            <Icon name="pricetag-outline" size={20} color="#6200ea" style={styles.icon} />
+            <Text style={styles.text}>Shop Type: {shopData.shopType}</Text>
+          </View>
+          <View style={styles.detailItem}>
+            <Icon name="call-outline" size={20} color="#6200ea" style={styles.icon} />
+            <Text style={styles.text}>Phone Number: {shopData.phoneNumber || 'N/A'}</Text>
+          </View>
+          <View style={styles.detailItem}>
+            <Icon name="mail-outline" size={20} color="#6200ea" style={styles.icon} />
+            <Text style={styles.text}>Email: {shopData.email || 'N/A'}</Text>
+          </View>
+          <View style={styles.detailItem}>
+            <Icon name="globe-outline" size={20} color="#6200ea" style={styles.icon} />
+            <Text style={styles.text}>Website: {shopData.website || 'N/A'}</Text>
+          </View>
+          <View style={styles.detailItem}>
+            <Icon name="time-outline" size={20} color="#6200ea" style={styles.icon} />
+            <Text style={styles.text}>Opening Hours: {shopData.openingHours || 'N/A'}</Text>
+          </View>
+          <View style={styles.detailItem}>
+            <Icon name="person-outline" size={20} color="#6200ea" style={styles.icon} />
+            <Text style={styles.text}>Contact Person: {shopData.contactPerson || 'N/A'}</Text>
+          </View>
           <TouchableOpacity style={styles.button} onPress={() => setEditing(true)}>
             <Text style={styles.buttonText}>Edit Shop Details</Text>
           </TouchableOpacity>
@@ -267,9 +296,16 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#333',
   },
+  detailItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  icon: {
+    marginRight: 10,
+  },
   text: {
     fontSize: 16,
-    marginBottom: 10,
     color: '#333',
     lineHeight: 22,
   },

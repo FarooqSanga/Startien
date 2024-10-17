@@ -54,7 +54,7 @@ const TabNavigation:FunctionComponent<Props> = ({}) => {
             return <FontAwesome name={iconName} size={size} color={color} />;
           }
         },
-        tabBarActiveTintColor: 'black',
+        tabBarActiveTintColor: '#6200ea',
         tabBarInactiveTintColor: 'gray',
         tabBarLabelStyle: {
           fontWeight: 'bold',

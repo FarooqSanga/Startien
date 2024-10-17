@@ -10,7 +10,6 @@ import {
   StatusBar,
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
-import database from '@react-native-firebase/database';
 import { useNavigation } from '@react-navigation/native';
 
 type Props = {
@@ -34,36 +33,9 @@ const LoginScreen: FunctionComponent<Props> = ({ navigation }) => {
     auth()
       .signInWithEmailAndPassword(email, password)
       .then(() => {
-
         navigation.replace('TabNavigation');
-
-        // console.log('User account signed in!');
-        // const currentUser = auth().currentUser;
-
-        // if (currentUser) {
-        //   const userID = currentUser.uid;
-        //   const userRef = database().ref(`/users/${userID}`);
-
-        //   userRef.once('value', (snapshot) => {
-        //     const userData = snapshot.val();
-        //     if (userData) {
-        //       // Check user data and navigate accordingly
-        //       if (!userData.profileCompleted || !userData.selectedPartner) {
-        //         navigation.replace('TabNavigation');
-        //       } else {
-        //         navigation.replace('TabNavigation');
-        //       }
-        //     } else {
-        //       // Handle case where userData is null or undefined
-        //       navigation.replace('TabNavigation');
-        //     }
-        //   });
-        // } else {
-        //   navigation.replace('LoginScreen');
-        // }
       })
       .catch(error => {
-        console.log('Error:', error);
         let errorMessage = 'Login failed. Please try again.';
 
         if (error.code === 'auth/email-already-in-use') {
@@ -75,7 +47,30 @@ const LoginScreen: FunctionComponent<Props> = ({ navigation }) => {
         }
 
         Alert.alert('Login Error', errorMessage);
-        console.log('Error Message:', errorMessage);
+      });
+  };
+
+  const handlePasswordReset = () => {
+    if (!email.trim()) {
+      Alert.alert('Password Reset Error', 'Please enter your email to reset password');
+      return;
+    }
+
+    auth()
+      .sendPasswordResetEmail(email)
+      .then(() => {
+        Alert.alert('Password Reset', 'A password reset link has been sent to your email.');
+      })
+      .catch(error => {
+        let errorMessage = 'Failed to send password reset email.';
+
+        if (error.code === 'auth/invalid-email') {
+          errorMessage = 'Invalid email address!';
+        } else if (error.code === 'auth/user-not-found') {
+          errorMessage = 'No user found with this email address!';
+        }
+
+        Alert.alert('Password Reset Error', errorMessage);
       });
   };
 
@@ -106,6 +101,9 @@ const LoginScreen: FunctionComponent<Props> = ({ navigation }) => {
           placeholder="Password"
           secureTextEntry
         />
+        <TouchableOpacity onPress={handlePasswordReset}>
+          <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
+        </TouchableOpacity>
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.button} onPress={handleLogin}>
             <Text style={styles.buttonText}>Login Now</Text>
@@ -187,7 +185,13 @@ const styles = StyleSheet.create({
   buttonContainer: {
     marginTop: 10,
     paddingHorizontal: 20,
-  }
+  },
+  forgotPasswordText: {
+    color: '#6200ea',
+    textAlign: 'right',
+    marginBottom: 15,
+    fontSize: 14,
+  },
 });
 
 export default LoginScreen;
